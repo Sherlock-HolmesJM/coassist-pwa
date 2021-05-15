@@ -60,7 +60,10 @@ const Input: React.FC<InputProps> = (props) => {
       required
       value={value}
       className={`duration focus ${type}`}
-      onFocus={(e) => e.target.select()}
+      onFocus={(e) => {
+        e.target.select();
+        console.log(e.target);
+      }}
       onChange={handleTimeChange}
     />
   );

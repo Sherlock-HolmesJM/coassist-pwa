@@ -18,7 +18,7 @@ const initial = {
     m: '00',
     s: '00',
   },
-  type: '' as 'T' | 'TE',
+  type: 'T' as 'T' | 'TE',
   givenOut: '',
 };
 

@@ -46,6 +46,7 @@ export const LabelTextField: React.FC<LabelTextFieldProps> = (props) => {
           placeholder={placeholder ?? ''}
           value={value}
           onChange={(e) => onChange(e.target.value.trim().toLowerCase())}
+          onFocus={(e) => e.target.select()}
           required
         />
       </div>

@@ -19,9 +19,9 @@ const initialData = {
   duration: 0,
   spin: false,
   time: {
-    h: '0',
-    m: '0',
-    s: '0',
+    h: '00',
+    m: '00',
+    s: '00',
   },
 };
 

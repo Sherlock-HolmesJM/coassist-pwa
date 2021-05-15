@@ -27,6 +27,8 @@ const MembersComp: React.FC<MembersProps> = () => {
     .filter((m) => m.active && m.givenOut)
     .sort((a, b) => a.givenOut.localeCompare(b.givenOut));
 
+  console.log(inactiveMembers);
+
   type Sig = {
     name: string;
     type: 'T' | 'TE';
@@ -39,6 +41,8 @@ const MembersComp: React.FC<MembersProps> = () => {
 
     const index = members.findIndex((m) => m.name === name);
     if (index !== -1) return swale(`${capitalize(name)} is already a member.`);
+
+    console.log({ name, capacity, type });
 
     const newMember: MemberI = {
       uid: Date.now(),
