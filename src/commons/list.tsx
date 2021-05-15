@@ -54,21 +54,21 @@ const List: React.FC<ListProps> = (props) => {
                 <ClickBadge
                   color='success'
                   onClick={() => onMark(item)}
-                  type='mark'
+                  text='M'
                 />
               )}
               {onUpdate && (
                 <ClickBadge
                   color='warning'
                   onClick={() => onUpdate(item)}
-                  type='update'
+                  text='U'
                 />
               )}
               {onDelete && (
                 <ClickBadge
                   color='danger'
                   onClick={() => onDelete(item)}
-                  type='delete'
+                  text='X'
                 />
               )}
             </div>

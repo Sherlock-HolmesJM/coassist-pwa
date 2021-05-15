@@ -1,16 +1,4 @@
 import styled from 'styled-components';
-import { MdDeleteForever } from 'react-icons/md';
-import { FaPenSquare, FaToggleOn } from 'react-icons/fa';
-
-type Type = 'delete' | 'update' | 'mark';
-
-const getIcon = (type: Type) => {
-  return type === 'delete'
-    ? MdDeleteForever
-    : type === 'update'
-    ? FaPenSquare
-    : FaToggleOn;
-};
 
 export interface BadgeProps {
   color:
@@ -22,9 +10,8 @@ export interface BadgeProps {
     | 'dark'
     | 'light'
     | 'info';
-  text?: string;
+  text: string;
   classes?: string;
-  type?: Type;
 }
 
 export interface DisplayBadge extends BadgeProps {
@@ -46,27 +33,20 @@ const Badge: React.FC<DisplayBadge> = (props: DisplayBadge) => {
 };
 
 const ClickBadge: React.FC<ClickBadgeI> = (props: ClickBadgeI) => {
-  const { color, onClick, type } = props;
-
-  const Icon = getIcon(type as Type);
+  const { color, text, onClick, classes } = props;
 
   return (
-    <Span>
-      <Icon className={`fading-3 badge-${color}`} onClick={onClick} />
+    <Span className={`fading-3 badge bg-${color} ${classes}`} onClick={onClick}>
+      {text}
     </Span>
   );
 };
 
-export const DeleteBadge: React.FC<ClickBadgeI> = (props) => {
-  return <MdDeleteForever className='badge-danger' onClick={props.onClick} />;
-};
-
 const Span = styled.span`
-  & * {
-    cursor: pointer;
-    margin: 3px;
-    font-size: 22px;
-  }
+  color: white;
+  cursor: pointer;
+  margin: 3px;
+  font-size: 14px;
 `;
 
 export { Badge, ClickBadge };
