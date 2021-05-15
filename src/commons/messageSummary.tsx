@@ -3,6 +3,7 @@ import { MessageI } from '../types';
 import { formatCap, getMessageTotals } from '../utils';
 import SumCard from './summaryCard';
 import styled from 'styled-components';
+import { getAnim } from '../utils/animations';
 
 export interface MessageSummaryProps {
   title: string;
@@ -21,9 +22,6 @@ const MessageSummary: React.FC<MessageSummaryProps> = (props) => {
         {messages.map((m, i) => {
           const totals = getMessageTotals(m);
 
-          const anims = ['zoom-in', 'zoom-out', 'slideInUp', 'flip-down'];
-          const rand = () => Math.floor(Math.random() * anims.length - 1);
-
           const list: [string, string][] = (
             [
               ['Length', m.duration],
@@ -40,7 +38,7 @@ const MessageSummary: React.FC<MessageSummaryProps> = (props) => {
             <SumCard
               key={i}
               title={m.name}
-              animation={anims[rand()]}
+              animation={getAnim()}
               items={list}
             />
           );

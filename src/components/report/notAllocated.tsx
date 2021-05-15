@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { MemberI, MessageI, Worker } from '../../types';
+import { getAnim } from '../../utils/animations';
 import { Flex, FlexItem, Title } from './flex';
 
 export interface NotAllocProps {
@@ -29,8 +30,6 @@ const NotAlloc: React.FC<NotAllocProps> = (props) => {
     },
   ];
 
-  const anims = ['fade-left', 'fade-up', 'zoom-in'];
-
   return (
     <div>
       <Title>Not Allocated</Title>
@@ -40,7 +39,7 @@ const NotAlloc: React.FC<NotAllocProps> = (props) => {
             key={ind}
             title={obj.title}
             items={obj.items}
-            animation={anims[ind]}
+            animation={getAnim()}
           />
         ))}
       </Flex>

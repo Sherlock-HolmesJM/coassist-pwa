@@ -4,7 +4,6 @@ import { FlexItem } from '../components/report/flex';
 interface SumCardProps {
   title: string;
   items: [string, string][];
-  delay?: number;
   animation?: string;
 }
 

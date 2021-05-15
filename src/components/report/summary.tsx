@@ -20,19 +20,15 @@ const weekbegan = getWeekBegin();
 const weekends = getWeekEnd(weekbegan);
 
 const Summary: React.FC<SummaryProps> = (props) => {
-  const {
-    members,
-    issuedPreviousWeeks,
-    issuedThisWeek,
-    returnedThisWeek,
-  } = props;
+  const { members, issuedPreviousWeeks, issuedThisWeek, returnedThisWeek } =
+    props;
 
   const ipw_rdw = returnedThisWeek.filter(
     (w) => !checkDate(new Date(w.dateReceived), weekbegan, weekends)
   );
 
   const teamCapacity = getTeamCapacity(members);
-  const idw = getWorkersCapacity([...issuedThisWeek, ...returnedThisWeek]); // idw: issued this week
+  const idw = getWorkersCapacity([...issuedThisWeek]); // idw: issued this week
   const rdw = getWorkersCapacity(returnedThisWeek); // rdw: returned this week
   const ipw = getWorkersCapacity([...issuedPreviousWeeks, ...ipw_rdw]); // ipw: issued previous week(s)
 

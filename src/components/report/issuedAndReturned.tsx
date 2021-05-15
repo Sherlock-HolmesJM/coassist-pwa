@@ -16,8 +16,8 @@ const IssuedReturned: React.FC<IssuedReturnedProps> = (props) => {
   const { issued, returned, outstanding } = props;
 
   const list = [
-    { title: 'Issued [Ts]', workers: issued.filter((w) => w.type === 'T') },
-    { title: 'Issued [TEs]', workers: issued.filter((w) => w.type === 'TE') },
+    { title: 'Working [Ts]', workers: issued.filter((w) => w.type === 'T') },
+    { title: 'Working [TEs]', workers: issued.filter((w) => w.type === 'TE') },
     { title: 'Returned [Ts]', workers: returned.filter((w) => w.type === 'T') },
     {
       title: 'Returned [TEs]',
@@ -35,7 +35,7 @@ const IssuedReturned: React.FC<IssuedReturnedProps> = (props) => {
 
   return (
     <div>
-      <Title>Issued and Returned</Title>
+      <Title>Working and Returned</Title>
       <Flex>
         {list.map(({ title, workers }, i) => (
           <Item key={i} title={title} workers={workers} />
