@@ -1,6 +1,6 @@
 import { updateWorker } from '../services/database';
 import { MemberType, MessageI, Worker } from '../types';
-import { checkDate, getWeekBegin, getWeekEnd } from './date';
+import { isThisWeek } from './date';
 
 const totals = (workers: Worker[], type: MemberType) => {
   return workers
@@ -29,9 +29,6 @@ export const getMessageTotals = (message: MessageI) => {
   };
 };
 
-const weekbegan = getWeekBegin('Sat');
-const weekends = getWeekEnd(weekbegan);
-
 /**
  *
  * @param workerUID
@@ -46,8 +43,8 @@ export const setWorkdone = (worker: Worker, messages: MessageI[]) => {
       (w) =>
         w.done &&
         w.memuid === worker.memuid &&
-        checkDate(new Date(w.dateReceived), weekbegan, weekends) &&
-        checkDate(new Date(w.dateReturned), weekbegan, weekends)
+        isThisWeek(new Date(w.dateReceived)) &&
+        isThisWeek(new Date(w.dateReturned))
     );
 
     seconds = seconds + list.reduce((acc, w) => acc + w.splitLength, 0);

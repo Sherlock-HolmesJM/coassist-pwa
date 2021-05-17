@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Summary from './summary';
 import NotAllocated from './notAllocated';
 import IssuedAndReturned from './issuedAndReturned';
-import { checkDate, getWeekBegin, getWeekEnd } from '../../utils/date';
+import { isThisWeek, getWeekBegin, getWeekEnd } from '../../utils/date';
 import MessageSummary from '../../commons/messageSummary';
 import * as reportUtils from '../../utils/report';
 
@@ -65,11 +65,7 @@ const Report: React.FC<ReportProps> = (props) => {
   const messagesFinishedThisWeek = messages.filter(
     (message) =>
       message.status === 'done' &&
-      checkDate(
-        new Date(message.transcriptEditor.dateReturned),
-        weekbegan,
-        weekends
-      )
+      isThisWeek(new Date(message.transcriptEditor.dateReturned))
   );
 
   // ================== Animation =======================

@@ -1,11 +1,6 @@
 import SumCard from '../../commons/summaryCard';
 import { MemberI, Worker } from '../../types';
-import {
-  checkDate,
-  getTeamCapacity,
-  getWeekBegin,
-  getWeekEnd,
-} from '../../utils';
+import { isThisWeek, getTeamCapacity } from '../../utils';
 import { getWorkersCapacity } from '../../utils/worker';
 import { Flex, Title } from './flex';
 
@@ -16,19 +11,20 @@ export interface SummaryProps {
   returnedThisWeek: Worker[];
 }
 
-const weekbegan = getWeekBegin();
-const weekends = getWeekEnd(weekbegan);
-
 const Summary: React.FC<SummaryProps> = (props) => {
   const { members, issuedPreviousWeeks, issuedThisWeek, returnedThisWeek } =
     props;
 
   const ipw_rdw = returnedThisWeek.filter(
-    (w) => !checkDate(new Date(w.dateReceived), weekbegan, weekends)
+    (w) => !isThisWeek(new Date(w.dateReceived))
+  );
+
+  const idw_rdw = returnedThisWeek.filter((worker) =>
+    isThisWeek(new Date(worker.dateReceived))
   );
 
   const teamCapacity = getTeamCapacity(members);
-  const idw = getWorkersCapacity([...issuedThisWeek]); // idw: issued this week
+  const idw = getWorkersCapacity([...issuedThisWeek, ...idw_rdw]); // idw: issued this week
   const rdw = getWorkersCapacity(returnedThisWeek); // rdw: returned this week
   const ipw = getWorkersCapacity([...issuedPreviousWeeks, ...ipw_rdw]); // ipw: issued previous week(s)
 

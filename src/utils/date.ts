@@ -79,13 +79,16 @@ export const getWeekEnd = (date: Date) => {
   return new Date(newDate);
 };
 
-export const checkDate = (date: Date, weekbegan: Date, weekends: Date) => {
-  const today = date.toDateString().split(' ')[2];
+const weekbegan = getWeekBegin('Sat');
+const weekends = getWeekEnd(weekbegan);
+
+export const isThisWeek = (date: Date) => {
+  const today = +date.toDateString().split(' ')[2];
 
   if (!today) return false;
 
   const began = weekbegan.toDateString().split(' ')[2];
   const ends = weekends.toDateString().split(' ')[2];
 
-  return range(+began, +ends).some((day) => day === +today);
+  return range(+began, +ends).some((day) => day === today);
 };

@@ -1,8 +1,5 @@
 import { MessageI, Worker } from '../types';
-import { checkDate, getWeekBegin, getWeekEnd } from './date';
-
-const weekbegan = getWeekBegin();
-const weekends = getWeekEnd(weekbegan);
+import { isThisWeek } from './date';
 
 export const getList2 = (
   messages: MessageI[],
@@ -13,8 +10,7 @@ export const getList2 = (
   return messages.reduce((acc, message) => {
     const workers = message.workers.filter(
       (worker) =>
-        worker.done === done &&
-        checkDate(new Date(worker[type]), weekbegan, weekends) === thisweek
+        worker.done === done && isThisWeek(new Date(worker[type])) === thisweek
     );
     return [...acc, ...workers];
   }, [] as Worker[]);
