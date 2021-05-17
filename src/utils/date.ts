@@ -87,8 +87,13 @@ export const isThisWeek = (date: Date) => {
 
   if (!today) return false;
 
-  const began = weekbegan.toDateString().split(' ')[2];
-  const ends = weekends.toDateString().split(' ')[2];
+  const began = +weekbegan.toDateString().split(' ')[2];
+  const ends = +weekends.toDateString().split(' ')[2];
 
-  return range(+began, +ends).some((day) => day === today);
+  const [y, m] = date.toJSON().split('-');
+  const ldm = getLastDayofMonth(+y, +m);
+
+  let daysInWeek = [...range(began, ldm), ...range(1, ends)].splice(0, 7);
+
+  return daysInWeek.some((day) => day === today);
 };
