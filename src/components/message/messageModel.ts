@@ -1,3 +1,4 @@
+import { updateWorker } from '../../services/database';
 import {
   createT_TE,
   MemberI,
@@ -26,33 +27,49 @@ const getT_TE_Name = (workers: Worker[], type: 'T' | 'TE') => {
   return length === 1 ? uniqueNames[0] : length === 0 ? '' : type + 's';
 };
 
-const getDateIssued = (object: T_And_TE) => {
+const getDateIssued = (object: T_And_TE, workers: Worker[]) => {
+  object.dateReturned = '';
+
   if (object.name === '') {
     object.dateIssued = '';
-    object.dateReturned = '';
   } else {
-    const { dateIssued } = object;
-    object.dateIssued === dateIssued || new Date().toJSON();
+    workers.sort(
+      (a, b) =>
+        new Date(a.dateReceived).getTime() - new Date(b.dateReceived).getTime()
+    );
+    object.dateIssued = workers[0].dateReceived;
   }
 };
 
-const getDateReturned = (object: T_And_TE) => {
-  const { dateReturned } = object;
-  object.dateReturned = dateReturned || new Date().toJSON();
+const getDateReturned = (object: T_And_TE, workers: Worker[]) => {
+  workers.sort((a, b) => {
+    return (
+      new Date(a.dateReceived).getTime() - new Date(b.dateReceived).getTime()
+    );
+  });
+
+  const lastworker = workers[workers.length - 1];
+
+  if (!lastworker.dateReturned) {
+    lastworker.dateReceived = new Date().toJSON();
+    updateWorker(lastworker);
+  }
+
+  object.dateReturned = lastworker.dateReturned;
 };
 
-const updateTorTE = (message: MessageI, ts: Worker[], tes: Worker[]) => {
+const updateT_TE = (message: MessageI, ts: Worker[], tes: Worker[]) => {
   if (!message.transcriber) message.transcriber = createT_TE('T');
   if (!message.transcriptEditor) message.transcriptEditor = createT_TE('TE');
 
   message.transcriptEditor.name = getT_TE_Name(tes, 'TE');
   message.transcriber.name = getT_TE_Name(ts, 'T');
 
-  if (message.status === 'done') getDateReturned(message.transcriptEditor);
-  else getDateIssued(message.transcriptEditor);
+  if (message.status === 'done') getDateReturned(message.transcriptEditor, tes);
+  else getDateIssued(message.transcriptEditor, tes);
 
-  if (message.transcribed === 'yes') getDateReturned(message.transcriber);
-  else getDateIssued(message.transcriber);
+  if (message.transcribed === 'yes') getDateReturned(message.transcriber, ts);
+  else getDateIssued(message.transcriber, ts);
 };
 
 const getSecond = (duration: number) => {
@@ -113,9 +130,7 @@ export const updateStatus = (message: MessageI) => {
 
   message.rank = getMessageRank(message.status);
 
-  updateTorTE(message, ts, tes);
-
-  console.log(message);
+  updateT_TE(message, ts, tes);
 };
 
 export const getMessageRank = (status: MessageStatus): MessageRank => {

@@ -34,7 +34,8 @@ function Message() {
 
     const wkr: Worker = { ...worker, done: !worker.done };
 
-    if (!wkr.dateReturned) wkr.dateReturned = new Date().toJSON();
+    if (wkr.done && !wkr.dateReceived) wkr.dateReturned = new Date().toJSON();
+    else if (!wkr.done) wkr.dateReturned = '';
 
     const newMessage: MessageI = { ...message };
     const index = newMessage.workers.indexOf(worker);
