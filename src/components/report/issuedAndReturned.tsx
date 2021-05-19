@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import Lottie from 'lottie-react';
 import { Worker } from '../../types';
-import { formatCap } from '../../utils';
-import { congrats } from '../../media';
+import { formatCap, isThisWeek } from '../../utils';
+import { congrats, outstanding } from '../../media';
 import { Flex, FlexItem, Title } from './flex';
 
 export interface IssuedReturnedProps {
@@ -60,6 +60,13 @@ const Item = (props: ItemProps) => {
     .sort((a, b) => a.part.localeCompare(b.part))
     .sort((a, b) => a.type.localeCompare(b.type));
 
+  const getAnimation = (worker: Worker) => {
+    if (worker.done && !isThisWeek(new Date(worker.dateReceived)))
+      return 'outstanding';
+    if (worker.done && worker.workdone >= worker.capacity) return 'congrats';
+    return 'none';
+  };
+
   return (
     // <FlexItemWrapper>
     <FlexItemWrapper data-aos='fade'>
@@ -68,13 +75,23 @@ const Item = (props: ItemProps) => {
       </WorkerTitle>
       <FlexWrapper>
         {sorted.map((w, i) => {
+          const anim = getAnimation(w);
           return (
             // <FlexItem className='worker-card' key={i}>
             <FlexItem className='worker-card' key={i} data-aos='fade-up'>
-              {w.workdone >= w.capacity && (
-                <div className='worker-card-congrats'>
-                  <Lottie animationData={congrats} loop={false} />
-                </div>
+              {anim === 'congrats' && (
+                <Lottie
+                  className='worker-card-congrats'
+                  animationData={congrats}
+                  loop={false}
+                />
+              )}
+              {anim === 'outstanding' && (
+                <Lottie
+                  className='worker-card-congrats'
+                  animationData={outstanding}
+                  loop={false}
+                />
               )}
               <div className='worker-card-name'>
                 {w.name} - {w.type}
