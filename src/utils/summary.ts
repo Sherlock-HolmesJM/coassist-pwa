@@ -28,7 +28,7 @@ export const summary = (messages: MessageI[]) => {
     { name: 'No. of Transcripts Edited', value: tEdited, classes: '' },
     {
       name: 'No. of Transcripts Not Edited',
-      value: total - tEdited,
+      value: tIP - tEdited,
       classes: 'summary-red',
     },
     {
