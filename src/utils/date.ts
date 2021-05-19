@@ -1,5 +1,3 @@
-import range from './range';
-
 const isLeapYear = (year: number) => {
   /**
  * 
@@ -83,17 +81,16 @@ const weekbegan = getWeekBegin('Sat');
 const weekends = getWeekEnd(weekbegan);
 
 export const isThisWeek = (date: Date) => {
-  const today = +date.toDateString().split(' ')[2];
+  const began = new Date(weekbegan.toJSON().split('T')[0]).getTime();
+  const ends = new Date(weekends.toJSON().split('T')[0]).getTime();
+  const today = new Date(date.toJSON()?.split('T')[0]).getTime() || -1;
 
-  if (!today) return false;
+  if (today === -1) return false;
+  return today >= began && today <= ends;
+};
 
-  const began = +weekbegan.toDateString().split(' ')[2];
-  const ends = +weekends.toDateString().split(' ')[2];
-
-  const [y, m] = date.toJSON().split('-');
-  const ldm = getLastDayofMonth(+y, +m);
-
-  let daysInWeek = [...range(began, ldm), ...range(1, ends)].splice(0, 7);
-
-  return daysInWeek.some((day) => day === today);
+export const formatDate = (date: Date) => {
+  const string = date.toDateString();
+  if (string === 'Invalid Date') return '';
+  return string;
 };

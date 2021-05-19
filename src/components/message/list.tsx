@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { capitalize, formatCap } from '../../utils';
+import { capitalize, formatCap, formatDate } from '../../utils';
 import { Worker } from '../../types';
 import { ClickBadge } from '../../commons/badge';
 
@@ -37,14 +37,20 @@ const List: React.FC<ListProps> = (props) => {
             return (
               <div className='list-group-item' key={worker.uid}>
                 <div>
-                  <div>
+                  <div className='list-group-item-name'>
                     {capitalize(worker.name)} - {worker.type}:
                   </div>
                   <div>
                     <em>{worker.part.toUpperCase()}</em>
                   </div>
-                  <div>
-                    <em>{formatCap(worker.splitLength)}</em>
+                  <div className='list-group-item-additional'>
+                    <em>Length: {formatCap(worker.splitLength)}</em>
+                    <em>
+                      Received: {formatDate(new Date(worker.dateReceived))}
+                    </em>
+                    <em>
+                      Reurned: {formatDate(new Date(worker.dateReturned))}
+                    </em>
                   </div>
                 </div>
                 <div className='list-group-item-badges'>
@@ -98,6 +104,14 @@ const Div = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 5px;
+  }
+  .list-group-item-name {
+    font-weight: bold;
+  }
+  .list-group-item-additional {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1px;
   }
   .list-group-item-badges {
     display: flex;

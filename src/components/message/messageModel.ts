@@ -65,7 +65,9 @@ const updateT_TE = (message: MessageI, ts: Worker[], tes: Worker[]) => {
   message.transcriptEditor.name = getT_TE_Name(tes, 'TE');
   message.transcriber.name = getT_TE_Name(ts, 'T');
 
-  if (message.status === 'done') getDateReturned(message.transcriptEditor, tes);
+  const { status } = message;
+  if (status === 'done' || status === 'sent2CGT')
+    getDateReturned(message.transcriptEditor, tes);
   else getDateIssued(message.transcriptEditor, tes);
 
   if (message.transcribed === 'yes') getDateReturned(message.transcriber, ts);
@@ -131,6 +133,9 @@ export const updateStatus = (message: MessageI) => {
   message.rank = getMessageRank(message.status);
 
   updateT_TE(message, ts, tes);
+  console.table(message);
+  console.table(message.transcriber);
+  console.table(message.transcriptEditor);
 };
 
 export const getMessageRank = (status: MessageStatus): MessageRank => {

@@ -62,11 +62,14 @@ const Report: React.FC<ReportProps> = (props) => {
     (m) => !transedited.find((worker) => worker.part === m.part)
   );
 
-  const messagesFinishedThisWeek = messages.filter(
-    (message) =>
-      message.status === 'done' &&
-      isThisWeek(new Date(message.transcriptEditor.dateReturned))
-  );
+  const messagesFinishedThisWeek = messages.filter((message) => {
+    const { dateReturned } = message.transcriptEditor;
+
+    return (
+      (message.status === 'done' || message.status === 'sent2CGT') &&
+      isThisWeek(new Date(dateReturned))
+    );
+  });
 
   // ================== Animation =======================
 
