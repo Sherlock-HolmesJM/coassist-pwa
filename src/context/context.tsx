@@ -43,12 +43,12 @@ class Provider extends PureComponent<Props, State> {
 
   dispatch = (action: AllActions) => {
     const newState = reducer(this.state, action);
-    this.setState({ ...newState, spin: false });
+    this.setState({ ...newState, spin: newState.spin ? true : false });
   };
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
-      // if (!user) return this.props.history.replace('/');
+      if (!user) return this.props.history.replace('/');
 
       getData().then((data) => {
         this.setState({ ...this.state, ...data, spin: false });

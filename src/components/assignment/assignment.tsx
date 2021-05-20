@@ -41,7 +41,7 @@ function Assignment() {
 
   const handleDelete = async (message: MessageI) => {
     const result = await swalconfirm(
-      `Yes, delete it`,
+      `Yes, delete`,
       `Delete ${message.name.toUpperCase()}!`
     );
     if (!result.isConfirmed) return;
