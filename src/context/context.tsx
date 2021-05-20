@@ -48,14 +48,16 @@ class Provider extends PureComponent<Props, State> {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
-      if (!user) return this.props.history.replace('/');
+      if (user) {
+        getData().then((data) =>
+          this.setState({ ...this.state, ...data, spin: false })
+        );
 
-      getData().then((data) => {
-        this.setState({ ...this.state, ...data, spin: false });
-      });
-
-      if (this.props.location.pathname === '/')
-        this.props.history.replace('/home');
+        if (this.props.location.pathname === '/')
+          this.props.history.replace('/home');
+      } else {
+        this.props.history.replace('/');
+      }
     });
   }
 
