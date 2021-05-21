@@ -30,25 +30,25 @@ const getT_TE_Name = (workers: Worker[], type: 'T' | 'TE') => {
 const getDateIssued = (object: T_And_TE, workers: Worker[]) => {
   object.dateReturned = '';
 
-  if (object.name === '') {
-    object.dateIssued = '';
-  } else {
-    workers.sort(
-      (a, b) =>
-        new Date(a.dateReceived).getTime() - new Date(b.dateReceived).getTime()
-    );
-    object.dateIssued = workers[0].dateReceived;
-  }
+  if (workers.length === 0) return (object.dateIssued = '');
+
+  workers.sort(
+    (a, b) =>
+      new Date(a.dateReceived).getTime() - new Date(b.dateReceived).getTime()
+  );
+  object.dateIssued = workers[0].dateReceived;
 };
 
 const getDateReturned = (object: T_And_TE, workers: Worker[]) => {
-  workers.sort((a, b) => {
-    return (
-      new Date(a.dateReceived).getTime() - new Date(b.dateReceived).getTime()
-    );
-  });
+  workers
+    .filter((w) => w.done)
+    .sort((a, b) => {
+      return (
+        new Date(b.dateReceived).getTime() - new Date(a.dateReceived).getTime()
+      );
+    });
 
-  const lastworker = workers[workers.length - 1];
+  const lastworker = workers[0];
 
   if (!lastworker.dateReturned) {
     lastworker.dateReceived = new Date().toJSON();
@@ -133,9 +133,6 @@ export const updateStatus = (message: MessageI) => {
   message.rank = getMessageRank(message.status);
 
   updateT_TE(message, ts, tes);
-  console.table(message);
-  console.table(message.transcriber);
-  console.table(message.transcriptEditor);
 };
 
 export const getMessageRank = (status: MessageStatus): MessageRank => {
