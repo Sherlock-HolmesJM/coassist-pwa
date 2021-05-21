@@ -147,6 +147,9 @@ const Report: React.FC<ReportProps> = (props) => {
 
 const Wrapper = styled.div`
   background-color: #f4a261;
+  #full-report {
+    background-color: #f4a261;
+  }
 `;
 
 const ButtonGroup = styled.div`

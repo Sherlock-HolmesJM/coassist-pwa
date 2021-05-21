@@ -111,10 +111,15 @@ function Assignment() {
           </div>
         </div>
       </div>
-      <main className='list-container animate__animated animate__backInUp'>
+      <main className='list-container'>
         <div className='list-group-k'>
-          {sorted.map((m) => (
-            <div key={m.name} className='list-group-item'>
+          {sorted.map((m, i) => (
+            <div
+              key={m.name}
+              className='list-group-item'
+              data-aos='fade-up'
+              data-aos-delay={i * 100}
+            >
               <div className='list-group-item-content'>
                 <Link to={`/assignments:${m.uid}`} className='link fading-1'>
                   {m.name}

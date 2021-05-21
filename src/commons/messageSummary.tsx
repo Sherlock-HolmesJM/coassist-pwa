@@ -21,6 +21,7 @@ const MessageSummary: React.FC<MessageSummaryProps> = (props) => {
       <div className='msgsum-btn-div'>
         <button
           className='btn btn-primary'
+          data-aos='fade-right'
           onClick={() => getImage(title, title)}
         >
           Report
@@ -69,11 +70,9 @@ const Div = styled.div`
     display: flex;
     justify-content: flex-end;
     padding: 10px;
-    padding-right: 80px;
   }
   .msg-container {
     padding-top: 10px;
-    align-self: center;
     background-color: #f4a261;
   }
 `;

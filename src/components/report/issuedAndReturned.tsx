@@ -90,6 +90,8 @@ const Item = (props: ItemProps) => {
                   className='worker-card-lottie'
                   animationData={congrats}
                   loop={false}
+                  data-aos='fade-down'
+                  data-aos-delay={50}
                 />
               )}
               {anim === 'outstanding' && (
@@ -97,6 +99,8 @@ const Item = (props: ItemProps) => {
                   className='worker-card-lottie outstanding'
                   animationData={outstanding}
                   loop={false}
+                  data-aos='fade-down'
+                  data-aos-delay={100}
                 />
               )}
               <div className='worker-card-name'>
@@ -129,12 +133,17 @@ const Item = (props: ItemProps) => {
               <div className='worker-card-btn-div'>
                 <button
                   className={`btn-primary worker-card-btn ${w.name}`}
+                  data-aos='fade-right'
                   onClick={() => {
                     const el = document.querySelector(
                       `.worker-card-btn.${w.name}`
                     ) as HTMLButtonElement;
+
                     if (el) el.style.display = 'none';
-                    getImage(w.name, w.name);
+
+                    getImage(w.name, w.name).then(() => {
+                      if (el) el.style.display = 'block';
+                    });
                   }}
                 >
                   Print

@@ -32,19 +32,26 @@ export const getList = (
 
 export const getImage = (id: string, filename: string) => {
   const el = document.getElementById(id);
-  const options: htmlToImage.Options = {
-    quality: 1,
-  };
 
-  if (el) {
-    htmlToImage
-      .toJpeg(el, options)
-      .then((dataUrl) => {
-        const link = document.createElement('a');
-        link.href = dataUrl;
-        link.download = `${filename}.jpeg`;
-        link.click();
-      })
-      .catch((error) => console.log({ error }));
-  }
+  return new Promise((resolve, reject) => {
+    if (el) {
+      const options: htmlToImage.Options = {
+        quality: 1,
+        pixelRatio: 2,
+      };
+
+      htmlToImage
+        .toJpeg(el, options)
+        .then((dataUrl) => {
+          const link = document.createElement('a');
+          link.href = dataUrl;
+          link.download = `${filename}.jpeg`;
+          link.click();
+          resolve('Completed');
+        })
+        .catch((error) => reject(error));
+    } else {
+      reject('No element');
+    }
+  });
 };

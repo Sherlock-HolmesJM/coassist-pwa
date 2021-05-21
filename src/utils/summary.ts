@@ -16,7 +16,7 @@ export const summary = (messages: MessageI[]) => {
     { name: 'No. of Audios Transcribed', value: aTrans, classes: '' },
     {
       name: 'No. of Audios Not Transcribed',
-      value: total - aTrans,
+      value: aIP,
       classes: 'summary-red',
     },
     { name: 'Total No. of Transcripts', value: total, classes: '' },
