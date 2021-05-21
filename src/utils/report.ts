@@ -1,5 +1,6 @@
 import { MessageI, Worker } from '../types';
 import { isThisWeek } from './date';
+import * as htmlToImage from 'html-to-image';
 
 export const getList2 = (
   messages: MessageI[],
@@ -27,4 +28,23 @@ export const getList = (
     );
     return [...acc, ...workers];
   }, [] as Worker[]);
+};
+
+export const getImage = (id: string, filename: string) => {
+  const el = document.getElementById(id);
+  const options: htmlToImage.Options = {
+    quality: 1,
+  };
+
+  if (el) {
+    htmlToImage
+      .toJpeg(el, options)
+      .then((dataUrl) => {
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = `${filename}.jpeg`;
+        link.click();
+      })
+      .catch((error) => console.log({ error }));
+  }
 };

@@ -25,6 +25,7 @@ const Report: React.FC<ReportProps> = (props) => {
   if (!report) return null;
 
   const messagesNotAllocated = messages.filter((m) => m.status === 'undone');
+
   const messagesInProgress = messages.filter(
     (m) =>
       m.status === 'in-progress' ||
@@ -35,12 +36,14 @@ const Report: React.FC<ReportProps> = (props) => {
   const audtrans = reportUtils.getList(messagesInProgress, 'T', true);
   const transinprog = reportUtils.getList(messagesInProgress, 'TE', false);
   const transedited = reportUtils.getList(messagesInProgress, 'TE', true);
+
   const issuedDisWeek = reportUtils.getList2(
     messagesInProgress,
     false,
     true,
     'dateReceived'
   );
+
   const issuedPreviousWeeks = reportUtils.getList2(
     messagesInProgress,
     false,
@@ -48,7 +51,7 @@ const Report: React.FC<ReportProps> = (props) => {
     'dateReceived'
   );
 
-  const returnedDisWeek = reportUtils.getList2(
+  const returnedthisweek = reportUtils.getList2(
     messages,
     true,
     true,
@@ -62,7 +65,7 @@ const Report: React.FC<ReportProps> = (props) => {
     (m) => !transedited.find((worker) => worker.part === m.part)
   );
 
-  const messagesFinishedThisWeek = messages.filter((message) => {
+  const messagesfinishedthisweek = messages.filter((message) => {
     const { dateReturned } = message.transcriptEditor;
 
     return (
@@ -91,11 +94,17 @@ const Report: React.FC<ReportProps> = (props) => {
         >
           PDF Report
         </button>
+        <button
+          className='btn btn-primary btn-print'
+          onClick={() => reportUtils.getImage('full-report', 'report')}
+        >
+          Image Report
+        </button>
         <button className='btn btn-primary btn-print' onClick={closeReport}>
           Close
         </button>
       </ButtonGroup>
-      <Div className={`animate__animated ${animIn}`} ref={ref}>
+      <Div className={`animate__animated ${animIn}`}>
         <div id='full-report'>
           <div className='title-container'>
             <h4 className='uppercase title'>
@@ -108,11 +117,11 @@ const Report: React.FC<ReportProps> = (props) => {
             members={members}
             issuedPreviousWeeks={issuedPreviousWeeks}
             issuedThisWeek={issuedDisWeek}
-            returnedThisWeek={returnedDisWeek}
+            returnedThisWeek={returnedthisweek}
           />
           <MessageSummary
             title={'Messages Completed this Week'}
-            messages={messagesFinishedThisWeek}
+            messages={messagesfinishedthisweek}
           />
           <MessageSummary
             messages={messagesInProgress}
@@ -127,7 +136,7 @@ const Report: React.FC<ReportProps> = (props) => {
           />
           <IssuedAndReturned
             issued={issuedDisWeek}
-            returned={returnedDisWeek}
+            returned={returnedthisweek}
             outstanding={issuedPreviousWeeks}
           />
         </div>

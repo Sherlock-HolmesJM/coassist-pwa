@@ -15,7 +15,6 @@ export interface State {
   messages: MessageI[];
   members: MemberI[];
   spin: boolean;
-  teamCapacity: number; // in seconds.
   dispatch: (a: any) => void;
 }
 
@@ -24,8 +23,7 @@ const state: State = {
   collatorName: "collator's name",
   messages: [],
   members: [],
-  spin: true,
-  teamCapacity: 0,
+  spin: false,
   dispatch: () => '',
 };
 
@@ -43,21 +41,20 @@ class Provider extends PureComponent<Props, State> {
 
   dispatch = (action: AllActions) => {
     const newState = reducer(this.state, action);
-    this.setState({ ...newState, spin: newState.spin ? true : false });
+    this.setState({ ...newState });
   };
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        getData().then((data) =>
-          this.setState({ ...this.state, ...data, spin: false })
-        );
+      if (!user) return this.props.history.replace('/');
 
-        if (this.props.location.pathname === '/')
-          this.props.history.replace('/home');
-      } else {
-        this.props.history.replace('/');
-      }
+      this.setState({ spin: true });
+      getData().then((data) => {
+        this.setState({ ...this.state, ...data, spin: false });
+      });
+
+      if (this.props.location.pathname === '/')
+        this.props.history.replace('/home');
     });
   }
 
@@ -70,5 +67,5 @@ class Provider extends PureComponent<Props, State> {
   }
 }
 
-export default withRouter(Provider);
 export { context };
+export default withRouter(Provider);

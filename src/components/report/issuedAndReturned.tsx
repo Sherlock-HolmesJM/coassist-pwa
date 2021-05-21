@@ -5,6 +5,7 @@ import { Worker } from '../../types';
 import { formatCap, isThisWeek } from '../../utils';
 import { congrats, outstanding } from '../../media';
 import { Flex, FlexItem, Title } from './flex';
+import { getImage } from '../../utils/report';
 
 export interface IssuedReturnedProps {
   issued: Worker[];
@@ -78,17 +79,22 @@ const Item = (props: ItemProps) => {
           const anim = getAnimation(w);
           return (
             // <FlexItem className='worker-card' key={i}>
-            <FlexItem className='worker-card' key={i} data-aos='fade-up'>
+            <FlexItem
+              className='worker-card'
+              key={i}
+              data-aos='fade-up'
+              id={w.name}
+            >
               {anim === 'congrats' && (
                 <Lottie
-                  className='worker-card-congrats'
+                  className='worker-card-lottie'
                   animationData={congrats}
                   loop={false}
                 />
               )}
               {anim === 'outstanding' && (
                 <Lottie
-                  className='worker-card-congrats'
+                  className='worker-card-lottie outstanding'
                   animationData={outstanding}
                   loop={false}
                 />
@@ -120,6 +126,20 @@ const Item = (props: ItemProps) => {
               <div className='worker-card-font-style'>
                 Work Done: {formatCap(w.workdone)}
               </div>
+              <div className='worker-card-btn-div'>
+                <button
+                  className={`btn-primary worker-card-btn ${w.name}`}
+                  onClick={() => {
+                    const el = document.querySelector(
+                      `.worker-card-btn.${w.name}`
+                    ) as HTMLButtonElement;
+                    if (el) el.style.display = 'none';
+                    getImage(w.name, w.name);
+                  }}
+                >
+                  Print
+                </button>
+              </div>
             </FlexItem>
           );
         })}
@@ -150,11 +170,14 @@ const FlexWrapper = styled(Flex)`
     background-color: #264653;
     color: white;
   }
-  .worker-card-congrats {
+  .worker-card-lottie {
     position: absolute;
     top: 1px;
     right: 1px;
-    width: max(15%, 100px);
+    width: 100px;
+  }
+  .worker-card-lottie.outstanding {
+    width: 80px;
   }
   .worker-card-name {
     font-weight: 700;
@@ -169,6 +192,14 @@ const FlexWrapper = styled(Flex)`
   }
   .worker-card-capacity {
     border-top: 1px solid gray;
+  }
+  .worker-card-btn-div {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .worker-card-btn {
+    margin: 4px;
+    border-radius: 2px;
   }
 `;
 

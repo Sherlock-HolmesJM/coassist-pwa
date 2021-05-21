@@ -17,11 +17,10 @@ import { capitalize } from '../utils';
 import { puff } from '../media';
 import { pageAnim } from '../config';
 
-export interface Props {}
-
-const Home: React.FC<Props> = () => {
+function Home() {
   const { collatorName, groupName, dispatch, spin, messages } =
     useContext(context);
+
   const [report, setReport] = useState(false);
   const [selfspin, setSpin] = useState(false);
 
@@ -127,10 +126,10 @@ const Home: React.FC<Props> = () => {
       </main>
     </Section>
   );
-};
+}
 
 const Section = styled.section`
-  background-color: inherit;
+  /* background-color: inherit; */
 
   .header {
     display: flex;
