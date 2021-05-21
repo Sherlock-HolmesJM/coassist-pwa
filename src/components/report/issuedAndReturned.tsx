@@ -91,7 +91,7 @@ const Item = (props: ItemProps) => {
                   animationData={congrats}
                   loop={false}
                   data-aos='fade-down'
-                  data-aos-delay={50}
+                  data-aos-delay={100}
                 />
               )}
               {anim === 'outstanding' && (

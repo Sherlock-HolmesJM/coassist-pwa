@@ -118,7 +118,7 @@ function Assignment() {
               key={m.name}
               className='list-group-item'
               data-aos='fade-up'
-              data-aos-delay={i * 100}
+              data-aos-delay={i * 100 > 600 ? 700 + i : i * 100}
             >
               <div className='list-group-item-content'>
                 <Link to={`/assignments:${m.uid}`} className='link fading-1'>
