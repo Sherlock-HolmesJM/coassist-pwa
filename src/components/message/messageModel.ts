@@ -40,6 +40,8 @@ const getDateIssued = (object: T_And_TE, workers: Worker[]) => {
 };
 
 const getDateReturned = (object: T_And_TE, workers: Worker[]) => {
+  if (workers.length === 0) return;
+
   workers
     .filter((w) => w.done)
     .sort((a, b) => {

@@ -9,3 +9,5 @@ This project was created to assist Collators in record keeping
 3. Keep record of your splits and their workers
 4. Generate the detailed report
 5. Generate the excel document
+
+# [Edit on StackBlitz ⚡️](https://stackblitz.com/edit/react-ts-vk1pef)
