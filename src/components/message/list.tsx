@@ -21,6 +21,15 @@ const List: React.FC<ListProps> = (props) => {
   const tes = workers.filter((w) => w.type === 'TE').length;
   const ts = workers.filter((w) => w.type === 'T').length;
 
+  const isEdited = (worker: Worker) => {
+    if (worker.type === 'TE') return '';
+
+    const TE = workers.find((w) => worker.part === w.part && w.type === 'TE');
+
+    if (TE?.done) return ' Edited';
+    return '';
+  };
+
   return (
     <Div className='list'>
       <div className='title-container'>
@@ -38,7 +47,8 @@ const List: React.FC<ListProps> = (props) => {
               <div className='list-group-item' key={worker.uid}>
                 <div>
                   <div className='list-group-item-name'>
-                    {capitalize(worker.name)} - {worker.type}:
+                    {capitalize(worker.name)} - {worker.type}
+                    <span style={{ color: 'blue' }}>{isEdited(worker)}</span>:
                   </div>
                   <div>
                     <em>{worker.part.toUpperCase()}</em>
