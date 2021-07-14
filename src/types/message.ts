@@ -19,7 +19,7 @@ export interface MessageI {
   rank: MessageRank;
 }
 
-export type MessageKey = 'sent2CGT' | 'rank';
+export type MessageKey = 'sent2CGT' | 'rank' | 'transcriber';
 
 export interface Messages {
   [key: string]: MessageI;

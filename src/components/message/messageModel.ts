@@ -52,6 +52,7 @@ const getDateReturned = (object: T_And_TE, workers: Worker[]) => {
 
   const lastworker = workers[0];
 
+  // Legacy code.
   if (!lastworker.dateReturned) {
     lastworker.dateReceived = new Date().toJSON();
     updateWorker(lastworker);
@@ -68,6 +69,7 @@ const updateT_TE = (message: MessageI, ts: Worker[], tes: Worker[]) => {
   message.transcriber.name = getT_TE_Name(ts, 'T');
 
   const { status } = message;
+
   if (status === 'done' || status === 'sent2CGT')
     getDateReturned(message.transcriptEditor, tes);
   else getDateIssued(message.transcriptEditor, tes);
