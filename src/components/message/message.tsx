@@ -1,32 +1,33 @@
-import { useContext, useState } from 'react';
-import { Link, Redirect, useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import { context } from '../../context/context';
-import { setMM } from '../../context/actions';
-import List from './list';
-import { MessageI, Worker } from '../../types';
-import { db } from '../../services';
-import * as mm from './messageModel';
-import { UpdateForm } from './messuform';
-import { AddForm } from './messaform';
-import TimeStamps from '../../commons/timestamps';
-import { capitalize, setWorkdone, swalconfirm } from '../../utils';
+import { useContext, useState } from "react";
+import { Link, Redirect, useParams } from "react-router-dom";
+import styled from "styled-components";
+import { context } from "../../context/context";
+import { setMM } from "../../context/actions";
+import List from "./list";
+import { MessageI, Worker } from "../../types";
+import { db } from "../../services";
+import * as mm from "./messageModel";
+import { UpdateForm } from "./messuform";
+import { AddForm } from "./messaform";
+import TimeStamps from "../commons/timestamps";
+import { capitalize, setWorkdone, swalconfirm } from "../../utils";
 
 function Message() {
   const { members, dispatch, messages } = useContext(context);
-  const msgUID = useParams<{ slug: string }>().slug.replace(':', '');
+
+  const { id: msguid } = useParams<{ id: string }>();
 
   const [showform, setForm] = useState(false);
   const [worker, setWorker] = useState<Worker>();
 
   const activemembers = members.filter((m) => m.active);
-  const message = messages.find((m) => m.uid === +msgUID);
-  const filename = message?.name + '-';
+  const message = messages.find((m) => m.uid === +msguid);
+  const filename = message?.name + "-";
   const workers = message?.workers ?? [];
-  const ts = workers.filter((w) => w.type === 'T');
-  const tes = workers.filter((w) => w.type === 'TE');
+  const ts = workers.filter((w) => w.type === "T");
+  const tes = workers.filter((w) => w.type === "TE");
 
-  if (!message) return <Redirect to='/assignments' />;
+  if (!message) return <Redirect to="/assignments" />;
 
   const handleMark = (worker: Worker) => {
     const obj = members.find((m) => m.uid === worker.memuid);
@@ -37,7 +38,7 @@ function Message() {
     const { done } = wkr;
 
     if (done) wkr.dateReturned = new Date().toJSON();
-    else if (!done) wkr.dateReturned = '';
+    else if (!done) wkr.dateReturned = "";
 
     const newMessage: MessageI = { ...message };
     const index = newMessage.workers.indexOf(worker);
@@ -87,20 +88,20 @@ function Message() {
 
   return (
     <Section showform={showform}>
-      <header className='header'>
-        <nav className='nav'>
-          <Link to='/assignments' className='btn btn-link'>
+      <header className="header">
+        <nav className="nav">
+          <Link to="/assignments" className="btn btn-link">
             Back
           </Link>
-          <Link to='/members' className='btn btn-link'>
+          <Link to="/members" className="btn btn-link">
             Members
           </Link>
         </nav>
-        <button className='btn btn-primary' onClick={() => setForm(true)}>
+        <button className="btn btn-primary" onClick={() => setForm(true)}>
           Assign Split
         </button>
       </header>
-      <div className='forms'>
+      <div className="forms">
         <UpdateForm
           filename={filename}
           worker={worker}
@@ -115,16 +116,16 @@ function Message() {
           showform={showform}
         />
       </div>
-      <div className='badge badge-secondary badge-assigned'>
+      <div className="badge badge-secondary badge-assigned">
         <div>Assigned Length [Ts]: {mm.getAssignedLength(ts)}</div>
         <div>Assigned Length [TEs]: {mm.getAssignedLength(tes)}</div>
         <div>Original Length: {message.originalLength}</div>
       </div>
-      <div className='container'>
+      <div className="container">
         <List
           workers={workers.filter((w) => !w.done)}
           done={false}
-          title='in-progress'
+          title="in-progress"
           onDelete={handleDelete}
           onUpdate={setWorker}
           onMark={handleMark}
@@ -132,7 +133,7 @@ function Message() {
         <List
           workers={workers.filter((w) => w.done)}
           done
-          title='done'
+          title="done"
           onDelete={handleDelete}
           onUpdate={setWorker}
           onMark={handleMark}

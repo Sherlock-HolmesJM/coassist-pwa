@@ -1,7 +1,7 @@
-import { capitalize, formatCap } from '../utils';
-import styled from 'styled-components';
-import { MemberI } from '../types';
-import { ClickBadge } from '../commons/badge';
+import { capitalize, formatCap } from "../../utils";
+import styled from "styled-components";
+import { MemberI } from "../../types";
+import { ClickBadge } from "./badge";
 
 export interface ListProps {
   items: MemberI[];
@@ -17,26 +17,26 @@ const List: React.FC<ListProps> = (props) => {
 
   if (items.length === 0) return null;
 
-  const ts = items.filter((m) => m.type === 'T');
-  const tes = items.filter((m) => m.type === 'TE');
+  const ts = items.filter((m) => m.type === "T");
+  const tes = items.filter((m) => m.type === "TE");
   const sorted = [...ts, ...tes];
 
   const anim = animate ?? true;
-  const classes = `list ${anim && 'animate__animated animate__fadeInUp'}`;
+  const classes = `list ${anim && "animate__animated animate__fadeInUp"}`;
 
   return (
     <Div className={classes}>
-      <div className='title-container'>
-        <h3 className='title'>{capitalize(title)} </h3>
-        <div className='badge-container'>
-          <span className='badge bg-warning m-1'>Ts: {ts.length}</span>
-          <span className='badge bg-warning'>TEs: {tes.length}</span>
+      <div className="title-container">
+        <h3 className="title">{capitalize(title)} </h3>
+        <div className="badge-container">
+          <span className="badge bg-warning m-1">Ts: {ts.length}</span>
+          <span className="badge bg-warning">TEs: {tes.length}</span>
         </div>
       </div>
-      <ul className='list-group'>
+      <ul className="list-group">
         {sorted.map((item) => (
-          <li className='list-group-item' key={item.uid}>
-            <div className='list-group-item-content'>
+          <li className="list-group-item" key={item.uid}>
+            <div className="list-group-item-content">
               <div>
                 {capitalize(item.name)} - {item.type}
               </div>
@@ -49,26 +49,26 @@ const List: React.FC<ListProps> = (props) => {
                 </em>
               </div>
             </div>
-            <div className='list-group-item-badges'>
+            <div className="list-group-item-badges">
               {onMark && (
                 <ClickBadge
-                  color='success'
+                  color="success"
                   onClick={() => onMark(item)}
-                  text='M'
+                  text="M"
                 />
               )}
               {onUpdate && (
                 <ClickBadge
-                  color='warning'
+                  color="warning"
                   onClick={() => onUpdate(item)}
-                  text='U'
+                  text="U"
                 />
               )}
               {onDelete && (
                 <ClickBadge
-                  color='danger'
+                  color="danger"
                   onClick={() => onDelete(item)}
-                  text='X'
+                  text="X"
                 />
               )}
             </div>

@@ -1,16 +1,16 @@
-import { useContext, useState } from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { context } from '../../context/context';
-import { setMessages, setMM } from '../../context/actions';
-import { MessageI, MessageStatus } from '../../types';
-import { db } from '../../services';
-import { getMemberStatus } from '../message/messageModel';
-import { ClickBadge } from '../../commons/badge';
-import FormAdd from './assaform';
-import FormUpdate from './assuform';
-import Loader from '../../commons/loader';
-import { swalconfirm } from '../../utils';
+import { useContext, useState } from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { context } from "../../context/context";
+import { setMessages, setMM } from "../../context/actions";
+import { MessageI, MessageStatus } from "../../types";
+import { db } from "../../services";
+import { getMemberStatus } from "../message/messageModel";
+import { ClickBadge } from "../commons/badge";
+import FormAdd from "./assaform";
+import FormUpdate from "./assuform";
+import Loader from "../commons/loader";
+import { swalconfirm } from "../../utils";
 
 function Assignment() {
   const { dispatch, messages, members, spin } = useContext(context);
@@ -19,25 +19,25 @@ function Assignment() {
 
   const sorted = messages.sort((a, b) => a.rank - b.rank);
 
-  const undone = messages.filter((m) => m.status === 'undone').length;
-  const done = messages.filter((m) => m.status === 'done').length;
-  const inProgress = messages.filter((m) => m.status === 'in-progress').length;
-  const incomplete = messages.filter((m) => m.status === 'incomplete').length;
-  const transcribed = messages.filter((m) => m.status === 'transcribed').length;
-  const sent = messages.filter((m) => m.status === 'sent2CGT').length;
+  const undone = messages.filter((m) => m.status === "undone").length;
+  const done = messages.filter((m) => m.status === "done").length;
+  const inProgress = messages.filter((m) => m.status === "in-progress").length;
+  const incomplete = messages.filter((m) => m.status === "incomplete").length;
+  const transcribed = messages.filter((m) => m.status === "transcribed").length;
+  const sent = messages.filter((m) => m.status === "sent2CGT").length;
 
   const getColor = (status: MessageStatus) =>
-    status === 'sent2CGT'
-      ? 'info'
-      : status === 'undone'
-      ? 'success'
-      : status === 'in-progress'
-      ? 'warning'
-      : status === 'incomplete'
-      ? 'secondary'
-      : status === 'transcribed'
-      ? 'secondary'
-      : 'danger';
+    status === "sent2CGT"
+      ? "info"
+      : status === "undone"
+      ? "success"
+      : status === "in-progress"
+      ? "warning"
+      : status === "incomplete"
+      ? "secondary"
+      : status === "transcribed"
+      ? "secondary"
+      : "danger";
 
   const handleDelete = async (message: MessageI) => {
     const result = await swalconfirm(
@@ -48,7 +48,7 @@ function Assignment() {
 
     const newMessages = messages.filter((m) => m.name !== message.name);
 
-    if (message.status === 'undone') {
+    if (message.status === "undone") {
       dispatch(setMessages(newMessages));
     } else {
       const newMembers = [...members];
@@ -66,15 +66,15 @@ function Assignment() {
   return (
     <Section>
       <Loader spin={spin} />
-      <header className='header'>
-        <nav className='nav'>
-          <Link to='/home' className='btn btn-link'>
+      <header className="header">
+        <nav className="nav">
+          <Link to="/home" className="btn btn-link">
             Back
           </Link>
-          <Link to='/members' className='btn btn-link'>
+          <Link to="/members" className="btn btn-link">
             Members
           </Link>
-          <button className='btn btn-primary' onClick={() => setShowform(true)}>
+          <button className="btn btn-primary" onClick={() => setShowform(true)}>
             New Message
           </button>
         </nav>
@@ -83,63 +83,63 @@ function Assignment() {
         <FormAdd setShowform={setShowform} showform={showform} />
         <FormUpdate message={message} setMessage={setMessage} />
       </div>
-      <div className='bg-container animate__animated animate__fadeIn'>
-        <div className='badge badge-secondary bg-summary'>
-          <div className='badge-content'>
+      <div className="bg-container animate__animated animate__fadeIn">
+        <div className="badge badge-secondary bg-summary">
+          <div className="badge-content">
             <span>Undone:</span>
             <span>{undone}</span>
           </div>
-          <div className='badge-content'>
+          <div className="badge-content">
             <span>Transcribed:</span>
             <span>{transcribed}</span>
           </div>
-          <div className='badge-content'>
+          <div className="badge-content">
             <span>Incomplete:</span>
             <span>{incomplete}</span>
           </div>
-          <div className='badge-content'>
+          <div className="badge-content">
             <span>In-progress:</span>
             <span>{inProgress}</span>
           </div>
-          <div className='badge-content'>
+          <div className="badge-content">
             <span>Done:</span>
             <span>{done}</span>
           </div>
-          <div className='badge-content'>
+          <div className="badge-content">
             <span>Sent:</span>
             <span>{sent}</span>
           </div>
         </div>
       </div>
-      <main className='list-container'>
-        <div className='list-group-k'>
+      <main className="list-container">
+        <div className="list-group-k">
           {sorted.map((m, i) => (
             <div
               key={m.name}
-              className='list-group-item'
-              data-aos='fade-up'
+              className="list-group-item"
+              data-aos="fade-up"
               data-aos-delay={i * 100 > 600 ? 700 + i : i * 100}
             >
-              <div className='list-group-item-content'>
-                <Link to={`/assignments:${m.uid}`} className='link fading-1'>
+              <div className="list-group-item-content">
+                <Link to={`/assignments/${m.uid}`} className="link fading-1">
                   {m.name}
                 </Link>
                 <div>
-                  <em className='list-group-item-status'>{m.status}</em>
+                  <em className="list-group-item-status">{m.status}</em>
                 </div>
               </div>
-              <div className='list-group-item-badges'>
+              <div className="list-group-item-badges">
                 <ClickBadge
-                  classes='bg-color'
+                  classes="bg-color"
                   color={getColor(m.status)}
                   onClick={() => setMessage(m)}
-                  text='u'
+                  text="u"
                 />
                 <ClickBadge
-                  classes='bg-color'
+                  classes="bg-color"
                   color={getColor(m.status)}
                   onClick={() => handleDelete(m)}
-                  text='x'
+                  text="x"
                 />
               </div>
             </div>

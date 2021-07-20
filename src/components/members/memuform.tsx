@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { MemberI } from '../../types';
-import { ActionButtonHolder, NameInput, Select } from '../assignment/inputs';
-import FormContainer from '../../commons/formHolder';
-import TimeInput from '../assignment/timeInput';
-import { hmsToSeconds, secondsToHMS, swalconfirm } from '../../utils';
+import { useEffect, useState } from "react";
+import { MemberI } from "../../types";
+import { ActionButtonHolder, NameInput, Select } from "../assignment/inputs";
+import FormContainer from "../commons/formHolder";
+import TimeInput from "../assignment/timeInput";
+import { hmsToSeconds, secondsToHMS, swalconfirm } from "../../utils";
 
 export interface UpdateProps {
   onUpdate: (object: any) => void;
@@ -12,14 +12,14 @@ export interface UpdateProps {
 }
 
 const initial = {
-  name: '',
+  name: "",
   capacity: {
-    h: '00',
-    m: '00',
-    s: '00',
+    h: "00",
+    m: "00",
+    s: "00",
   },
-  type: 'T' as 'T' | 'TE',
-  givenOut: '',
+  type: "T" as "T" | "TE",
+  givenOut: "",
 };
 
 const Update: React.FC<UpdateProps> = (props) => {
@@ -32,7 +32,7 @@ const Update: React.FC<UpdateProps> = (props) => {
     if (member) {
       const { name, type, givenOut } = member;
       const capacity = secondsToHMS(member.capacity ?? 0);
-      setData({ ...data, name, capacity, type, givenOut: givenOut ?? '' });
+      setData({ ...data, name, capacity, type, givenOut: givenOut ?? "" });
     }
 
     // eslint-disable-next-line
@@ -58,14 +58,14 @@ const Update: React.FC<UpdateProps> = (props) => {
 
   return (
     <FormContainer props={containerProps}>
-      <form onSubmit={handleSubmit} className='form'>
+      <form onSubmit={handleSubmit} className="form">
         <NameInput
           value={name}
           placeholder={`Member's name`}
           setName={(name) => setData({ ...data, name })}
         />
         <TimeInput
-          placeholder='Capacity (H:M:S)'
+          placeholder="Capacity (H:M:S)"
           time={capacity}
           setTime={(type, value) =>
             setData({ ...data, capacity: { ...data.capacity, [type]: value } })
@@ -74,10 +74,10 @@ const Update: React.FC<UpdateProps> = (props) => {
         <Select
           value={type}
           values={[
-            ['T', 'Transcriber'],
-            ['TE', 'Transcript Editor'],
+            ["T", "Transcriber"],
+            ["TE", "Transcript Editor"],
           ]}
-          label='Type'
+          label="Type"
           onChange={(value) => setData({ ...data, type: value as any })}
         />
         <NameInput
@@ -86,7 +86,7 @@ const Update: React.FC<UpdateProps> = (props) => {
           required={false}
           setName={(givenOut) => setData({ ...data, givenOut })}
         />
-        <ActionButtonHolder value='update' />
+        <ActionButtonHolder value="update" />
       </form>
     </FormContainer>
   );

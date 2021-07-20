@@ -1,10 +1,10 @@
-import { Flex, Title } from '../components/report/flex';
-import { MessageI } from '../types';
-import { formatCap, getMessageTotals } from '../utils';
-import SumCard from './summaryCard';
-import styled from 'styled-components';
-import { getAnim } from '../utils/animations';
-import { getImage } from '../utils/report';
+import { Flex, Title } from "../report/flex";
+import { MessageI } from "../../types";
+import { formatCap, getMessageTotals } from "../../utils";
+import SumCard from "../cards/summaryCard";
+import styled from "styled-components";
+import { getAnim } from "../../utils/animations";
+import { getImage } from "../../utils/report";
 
 export interface MessageSummaryProps {
   title: string;
@@ -18,16 +18,16 @@ const MessageSummary: React.FC<MessageSummaryProps> = (props) => {
 
   return (
     <Div>
-      <div className='msgsum-btn-div'>
+      <div className="msgsum-btn-div">
         <button
-          className='btn btn-primary'
-          data-aos='fade-right'
+          className="btn btn-primary"
+          data-aos="fade-right"
           onClick={() => getImage(title, title)}
         >
           Report
         </button>
       </div>
-      <div className='msg-container' id={title}>
+      <div className="msg-container" id={title}>
         <Title>{title}</Title>
         <Flex>
           {messages.map((m, i) => {
@@ -35,11 +35,11 @@ const MessageSummary: React.FC<MessageSummaryProps> = (props) => {
 
             const list: [string, string][] = (
               [
-                ['Length', m.duration],
-                ['Transcribed', totals.done_t],
-                ['Edited', totals.done_te],
-                ['Transcribing', totals.working_t],
-                ['Editing', totals.working_te],
+                ["Length", m.duration],
+                ["Transcribed", totals.done_t],
+                ["Edited", totals.done_te],
+                ["Transcribing", totals.working_t],
+                ["Editing", totals.working_te],
               ] as [string, number][]
             )
               .filter((item) => item[1] > 0)

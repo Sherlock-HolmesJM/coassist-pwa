@@ -1,8 +1,8 @@
-import SumCard from '../../commons/summaryCard';
-import { MemberI, Worker } from '../../types';
-import { isThisWeek, getTeamCapacity } from '../../utils';
-import { getWorkersCapacity } from '../../utils/worker';
-import { Flex, Title } from './flex';
+import SumCard from "../cards/summaryCard";
+import { MemberI, Worker } from "../../types";
+import { isThisWeek, getTeamCapacity } from "../../utils";
+import { getWorkersCapacity } from "../../utils/worker";
+import { Flex, Title } from "./flex";
 
 export interface SummaryProps {
   members: MemberI[];
@@ -35,25 +35,25 @@ const Summary: React.FC<SummaryProps> = (props) => {
         <SumCard
           title={`Team's Capacity`}
           items={[
-            ['Transcribers', teamCapacity.ts],
-            ['Transcript Editors', teamCapacity.tes],
+            ["Transcribers", teamCapacity.ts],
+            ["Transcript Editors", teamCapacity.tes],
           ]}
         />
         <SumCard
           title={`Transcribers`}
           items={[
-            ['Issued', `${idw.tc} + ${ipw.tc}`],
-            ['Returned', `${rdw.tc}`],
+            ["Issued", `${idw.tc} + ${ipw.tc}`],
+            ["Returned", `${rdw.tc}`],
           ]}
-          animation='flip-left'
+          animation="flip-left"
         />
         <SumCard
           title={`Transcript Editors`}
           items={[
-            ['Issued', `${idw.tec} + ${ipw.tec}`],
-            ['Returned', `${rdw.tec}`],
+            ["Issued", `${idw.tec} + ${ipw.tec}`],
+            ["Returned", `${rdw.tec}`],
           ]}
-          animation='flip-right'
+          animation="flip-right"
         />
       </Flex>
     </div>

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Flex = styled.div`
   display: flex;
@@ -9,6 +9,7 @@ export const Flex = styled.div`
 `;
 
 export const FlexItem = styled.div`
+  position: relative;
   min-width: 290px;
   flex-basis: calc(calc(500px - 100%) * 999);
   flex-grow: 1;

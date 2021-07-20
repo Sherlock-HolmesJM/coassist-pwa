@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
-import { MessageI, Worker } from '../../types';
-import * as mm from './messageModel';
-import { context } from '../../context/context';
-import { setMessages } from '../../context/actions';
-import { db } from '../../services';
-import { swalconfirm } from '../../utils';
-import FormHolder from '../../commons/formHolder';
-import { LabelTextField, ActionButtonHolder } from '../assignment/inputs';
+import { useContext, useEffect, useState } from "react";
+import { MessageI, Worker } from "../../types";
+import * as mm from "./messageModel";
+import { context } from "../../context/context";
+import { setMessages } from "../../context/actions";
+import { db } from "../../services";
+import { swalconfirm } from "../../utils";
+import FormHolder from "../commons/formHolder";
+import { LabelTextField, ActionButtonHolder } from "../assignment/inputs";
 
 interface UpdateProps {
   filename: string;
@@ -20,11 +20,11 @@ export const UpdateForm: React.FC<UpdateProps> = (props) => {
   const { dispatch, messages } = useContext(context);
 
   const [splitLength, setSplitLength] = useState(0);
-  const [split, setSplit] = useState('');
+  const [split, setSplit] = useState("");
 
   useEffect(() => {
     if (worker) {
-      setSplit(worker.part.replace(filename, ''));
+      setSplit(worker.part.replace(filename, ""));
       setSplitLength(worker.splitLength ?? 0);
     }
     // eslint-disable-next-line
@@ -78,16 +78,16 @@ export const UpdateForm: React.FC<UpdateProps> = (props) => {
         <LabelTextField
           value={split}
           label={filename}
-          placeholder={'s1'}
+          placeholder={"s1"}
           onChange={(value) => handleChange(value)}
         />
         <LabelTextField
-          type='number'
-          value={splitLength / 60 + ''}
-          label='Split Length (Min)'
+          type="number"
+          value={splitLength / 60 + ""}
+          label="Split Length (Min)"
           onChange={(value) => setSplitLength(+value * 60)}
         />
-        <ActionButtonHolder value='update' />
+        <ActionButtonHolder value="update" />
       </form>
     </FormHolder>
   );

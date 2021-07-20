@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import FormContainer from '../../commons/formHolder';
-import { ActionButtonHolder, NameInput, Select } from '../assignment/inputs';
-import TimeInput from '../assignment/timeInput';
-import { hmsToSeconds } from '../../utils';
+import { useState } from "react";
+import FormContainer from "../commons/formHolder";
+import { ActionButtonHolder, NameInput, Select } from "../assignment/inputs";
+import TimeInput from "../assignment/timeInput";
+import { hmsToSeconds } from "../../utils";
 
 export interface AddProps {
   onAdd: (object: any) => void;
@@ -11,13 +11,13 @@ export interface AddProps {
 }
 
 const initial = {
-  name: '',
+  name: "",
   capacity: {
-    h: '00',
-    m: '00',
-    s: '00',
+    h: "00",
+    m: "00",
+    s: "00",
   },
-  type: 'T' as 'T' | 'TE',
+  type: "T" as "T" | "TE",
 };
 
 const Add: React.FC<AddProps> = (props) => {
@@ -41,14 +41,14 @@ const Add: React.FC<AddProps> = (props) => {
 
   return (
     <FormContainer props={containerProps}>
-      <form onSubmit={handleSubmit} className='form'>
+      <form onSubmit={handleSubmit} className="form">
         <NameInput
           value={name}
           placeholder={`Member's name`}
           setName={(name) => setData({ ...data, name })}
         />
         <TimeInput
-          placeholder='Capacity (H:M:S)'
+          placeholder="Capacity (H:M:S)"
           time={capacity}
           setTime={(type, value) =>
             setData({ ...data, capacity: { ...data.capacity, [type]: value } })
@@ -57,13 +57,13 @@ const Add: React.FC<AddProps> = (props) => {
         <Select
           value={type}
           values={[
-            ['T', 'Transcriber'],
-            ['TE', 'Transcript Editor'],
+            ["T", "Transcriber"],
+            ["TE", "Transcript Editor"],
           ]}
-          label='Type'
+          label="Type"
           onChange={(value) => setData({ ...data, type: value as any })}
         />
-        <ActionButtonHolder value='add' />
+        <ActionButtonHolder value="add" />
       </form>
     </FormContainer>
   );

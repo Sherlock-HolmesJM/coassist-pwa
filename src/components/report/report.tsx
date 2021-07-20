@@ -1,19 +1,19 @@
-import { useContext, useRef } from 'react';
-import { context } from '../../context/context';
-import styled from 'styled-components';
-import Summary from './summary';
-import NotAllocated from './notAllocated';
-import IssuedAndReturned from './issuedAndReturned';
-import { isThisWeek, getWeekBegin, getWeekEnd } from '../../utils/date';
-import MessageSummary from '../../commons/messageSummary';
-import * as reportUtils from '../../utils/report';
+import { useContext, useRef } from "react";
+import { context } from "../../context/context";
+import styled from "styled-components";
+import Summary from "./summary";
+import NotAllocated from "./notAllocated";
+import IssuedAndReturned from "./issuedAndReturned";
+import { isThisWeek, getWeekBegin, getWeekEnd } from "../../utils/date";
+import MessageSummary from "../commons/messageSummary";
+import * as reportUtils from "../../utils/report";
 
 export interface ReportProps {
   report: boolean;
   setReport: (value: boolean) => void;
 }
 
-const weekbegan = getWeekBegin('Sat');
+const weekbegan = getWeekBegin("Sat");
 const weekends = getWeekEnd(weekbegan);
 
 const Report: React.FC<ReportProps> = (props) => {
@@ -24,38 +24,38 @@ const Report: React.FC<ReportProps> = (props) => {
 
   if (!report) return null;
 
-  const messagesNotAllocated = messages.filter((m) => m.status === 'undone');
+  const messagesNotAllocated = messages.filter((m) => m.status === "undone");
 
   const messagesInProgress = messages.filter(
     (m) =>
-      m.status === 'in-progress' ||
-      m.status === 'transcribed' ||
-      m.status === 'incomplete'
+      m.status === "in-progress" ||
+      m.status === "transcribed" ||
+      m.status === "incomplete"
   );
 
-  const audtrans = reportUtils.getList(messagesInProgress, 'T', true);
-  const transinprog = reportUtils.getList(messagesInProgress, 'TE', false);
-  const transedited = reportUtils.getList(messagesInProgress, 'TE', true);
+  const audtrans = reportUtils.getList(messagesInProgress, "T", true);
+  const transinprog = reportUtils.getList(messagesInProgress, "TE", false);
+  const transedited = reportUtils.getList(messagesInProgress, "TE", true);
 
   const issuedDisWeek = reportUtils.getList2(
     messagesInProgress,
     false,
     true,
-    'dateReceived'
+    "dateReceived"
   );
 
   const issuedPreviousWeeks = reportUtils.getList2(
     messagesInProgress,
     false,
     false,
-    'dateReceived'
+    "dateReceived"
   );
 
   const returnedthisweek = reportUtils.getList2(
     messages,
     true,
     true,
-    'dateReturned'
+    "dateReturned"
   );
 
   let transcriptsNotAllocated = audtrans.filter(
@@ -69,15 +69,15 @@ const Report: React.FC<ReportProps> = (props) => {
     const { dateReturned } = message.transcriptEditor;
 
     return (
-      (message.status === 'done' || message.status === 'sent2CGT') &&
+      (message.status === "done" || message.status === "sent2CGT") &&
       isThisWeek(new Date(dateReturned))
     );
   });
 
   // ================== Animation =======================
 
-  const animIn = 'animate__fadeIn';
-  const animOut = 'animate__fadeOut';
+  const animIn = "animate__fadeIn";
+  const animOut = "animate__fadeOut";
 
   const closeReport = () => {
     ref.current?.classList.remove(animIn);
@@ -87,27 +87,27 @@ const Report: React.FC<ReportProps> = (props) => {
 
   return (
     <Wrapper className={`animate__animated ${animIn}`} ref={ref}>
-      <ButtonGroup className='btn-group no-print'>
+      <ButtonGroup className="btn-group no-print">
         <button
-          className='btn btn-primary btn-print'
+          className="btn btn-primary btn-print"
           onClick={() => window.print()}
         >
           PDF Report
         </button>
         <button
-          className='btn btn-primary btn-print'
-          onClick={() => reportUtils.getImage('full-report', 'report')}
+          className="btn btn-primary btn-print"
+          onClick={() => reportUtils.getImage("full-report", "report")}
         >
           Image Report
         </button>
-        <button className='btn btn-primary btn-print' onClick={closeReport}>
+        <button className="btn btn-primary btn-print" onClick={closeReport}>
           Close
         </button>
       </ButtonGroup>
       <Div className={`animate__animated ${animIn}`}>
-        <div id='full-report'>
-          <div className='title-container'>
-            <h4 className='uppercase title'>
+        <div id="full-report">
+          <div className="title-container">
+            <h4 className="uppercase title">
               {groupName} weekly report - {collatorName}
             </h4>
             <h5>Week Began: {weekbegan.toDateString()}</h5>
@@ -120,12 +120,12 @@ const Report: React.FC<ReportProps> = (props) => {
             returnedThisWeek={returnedthisweek}
           />
           <MessageSummary
-            title={'Messages Completed this Week'}
+            title={"Messages Completed this Week"}
             messages={messagesfinishedthisweek}
           />
           <MessageSummary
             messages={messagesInProgress}
-            title={'Messages in Progress: Completion Rate'}
+            title={"Messages in Progress: Completion Rate"}
           />
           <NotAllocated
             audios={messagesNotAllocated}

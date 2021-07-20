@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { FlexItem } from '../components/report/flex';
+import styled from "styled-components";
+import { FlexItem } from "../report/flex";
 
 interface SumCardProps {
   title: string;
@@ -11,12 +11,12 @@ const SumCard: React.FC<SumCardProps> = (props) => {
   const { title, items, animation } = props;
 
   return (
-    <FlexItemWrap data-aos={animation ?? 'flip-down'}>
-      <h6 className='card-title'>{title.toUpperCase()}</h6>
+    <FlexItemWrap data-aos={animation ?? "flip-down"}>
+      <h6 className="card-title">{title.toUpperCase()}</h6>
       {items.map((item, index) => (
-        <div className='card-totals-container' key={index}>
-          <em className='card-total'>{item[0]}</em>
-          <em className='card-total'>{item[1]}</em>
+        <div className="card-totals-container" key={index}>
+          <em className="card-total">{item[0]}</em>
+          <em className="card-total">{item[1]}</em>
         </div>
       ))}
     </FlexItemWrap>

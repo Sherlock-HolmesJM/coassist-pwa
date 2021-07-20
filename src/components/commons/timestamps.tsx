@@ -1,6 +1,6 @@
-import { Worker } from '../types';
-import { secondsToHMS } from '../utils';
-import styled from 'styled-components';
+import { Worker } from "../../types";
+import { secondsToHMS } from "../../utils";
+import styled from "styled-components";
 
 export interface TimeStampsProps {
   workers: Worker[];
@@ -32,13 +32,13 @@ const TimeStamps: React.FC<TimeStampsProps> = (props) => {
 
   return (
     <Div>
-      <h5 className='timestamp-title'>Timestamps [Starting Points]</h5>
+      <h5 className="timestamp-title">Timestamps [Starting Points]</h5>
       <div>
         {uniqueParts.map((p, i) => {
           const { h, m, s } = timestamps[i];
           return (
             <div key={i}>
-              <span className='filename'>{p}</span> - Time {h}:{m}:{s}
+              <span className="filename">{p}</span> - Time {h}:{m}:{s}
             </div>
           );
         })}

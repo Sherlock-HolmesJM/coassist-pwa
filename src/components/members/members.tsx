@@ -1,16 +1,16 @@
-import React, { useContext, useState } from 'react';
-import styled from 'styled-components';
-import List from '../../commons/list';
-import { Link } from 'react-router-dom';
-import { capitalize, swalconfirm, swale } from '../../utils';
-import { context } from '../../context/context';
-import { setMembers, setMM } from '../../context/actions';
-import { MemberI } from '../../types';
-import { db } from '../../services';
-import { getMemberStatus } from '../message/messageModel';
-import Addform from './memaform';
-import UpdateForm from './memuform';
-import Loader from '../../commons/loader';
+import React, { useContext, useState } from "react";
+import styled from "styled-components";
+import List from "../commons/list";
+import { Link } from "react-router-dom";
+import { capitalize, swalconfirm, swale } from "../../utils";
+import { context } from "../../context/context";
+import { setMembers, setMM } from "../../context/actions";
+import { MemberI } from "../../types";
+import { db } from "../../services";
+import { getMemberStatus } from "../message/messageModel";
+import Addform from "./memaform";
+import UpdateForm from "./memuform";
+import Loader from "../commons/loader";
 
 export interface MembersProps {}
 
@@ -31,7 +31,7 @@ const MembersComp: React.FC<MembersProps> = () => {
 
   type Sig = {
     name: string;
-    type: 'T' | 'TE';
+    type: "T" | "TE";
     capacity: number;
     givenOut: string;
   };
@@ -51,8 +51,8 @@ const MembersComp: React.FC<MembersProps> = () => {
       active: false,
       free: false,
       capacity,
-      reason: '',
-      givenOut: '',
+      reason: "",
+      givenOut: "",
     };
     const newMembers: MemberI[] = [...members, newMember];
 
@@ -91,7 +91,7 @@ const MembersComp: React.FC<MembersProps> = () => {
     const { name, capacity, type, givenOut } = props;
 
     const obj = { ...member, type, givenOut, name, capacity };
-    obj.free = obj.free ? givenOut === '' : false;
+    obj.free = obj.free ? givenOut === "" : false;
 
     const index = members.indexOf(member);
     const newMembers = [...members];
@@ -102,10 +102,10 @@ const MembersComp: React.FC<MembersProps> = () => {
         message.workers
           .filter((worker) => worker.memuid === member.uid)
           .forEach((worker) => {
-            console.log(worker.name, 'before');
+            console.log(worker.name, "before");
             worker.capacity = capacity;
             worker.name = name;
-            console.log(worker.name, 'after');
+            console.log(worker.name, "after");
             db.updateWorker(worker);
           });
       });
@@ -120,18 +120,18 @@ const MembersComp: React.FC<MembersProps> = () => {
   return (
     <Section>
       <Loader spin={spin} />
-      <header className='header'>
-        <nav className='nav'>
-          <Link to='/home' className='btn btn-link'>
+      <header className="header">
+        <nav className="nav">
+          <Link to="/home" className="btn btn-link">
             Back
           </Link>
-          <Link to='/assignments' className='btn btn-link'>
+          <Link to="/assignments" className="btn btn-link">
             Assignment
           </Link>
-          <button className='btn btn-primary' onClick={() => setShow(true)}>
+          <button className="btn btn-primary" onClick={() => setShow(true)}>
             New Member
           </button>
-          <button className='btn btn-primary' onClick={() => window.print()}>
+          <button className="btn btn-primary" onClick={() => window.print()}>
             Get PDF
           </button>
         </nav>
@@ -142,40 +142,40 @@ const MembersComp: React.FC<MembersProps> = () => {
         member={member}
         onUpdate={handleUpdate}
       />
-      <div className='container'>
+      <div className="container">
         <List
           items={inactiveMembers}
-          title='inactive members'
+          title="inactive members"
           onMark={handleMark}
           onDelete={handleDelete}
           onUpdate={(member) => setMember(member)}
         />
         <List
           items={activeMembers}
-          title='active members'
+          title="active members"
           onMark={handleMark}
           onDelete={handleDelete}
           onUpdate={(member) => setMember(member)}
         />
         <List
           items={givenOut}
-          title='Given Out'
+          title="Given Out"
           onUpdate={(member) => setMember(member)}
         />
       </div>
-      <div className='hide'>
-        <div className='hide-title-container'>
+      <div className="hide">
+        <div className="hide-title-container">
           <h2>{groupName} Members List</h2>
           <h2>Collator: {collatorName}</h2>
         </div>
-        <div className='hide-container'>
-          <List items={activeMembers} animate={false} title='active members' />
+        <div className="hide-container">
+          <List items={activeMembers} animate={false} title="active members" />
           <List
             items={inactiveMembers}
             animate={false}
-            title='inactive members'
+            title="inactive members"
           />
-          <List items={givenOut} animate={false} title='Given Out' />
+          <List items={givenOut} animate={false} title="Given Out" />
         </div>
       </div>
     </Section>

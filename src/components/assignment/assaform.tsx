@@ -1,12 +1,12 @@
-import React, { useContext, useState } from 'react';
-import { hmsToSeconds, secondsToHMS, swale, swals } from '../../utils';
-import { context } from '../../context/context';
-import { setMessages } from '../../context/actions';
-import { MessageI, createT_TE } from '../../types';
-import { db } from '../../services';
-import { SizeInput, NameInput, FileInput, ActionButtonHolder } from './inputs';
-import TimeInput from './timeInput';
-import FormContainer from '../../commons/formHolder';
+import React, { useContext, useState } from "react";
+import { hmsToSeconds, secondsToHMS, swale, swals } from "../../utils";
+import { context } from "../../context/context";
+import { setMessages } from "../../context/actions";
+import { MessageI, createT_TE } from "../../types";
+import { db } from "../../services";
+import { SizeInput, NameInput, FileInput, ActionButtonHolder } from "./inputs";
+import TimeInput from "./timeInput";
+import FormContainer from "../commons/formHolder";
 
 export interface FormProps {
   setShowform: (value: boolean) => void;
@@ -14,14 +14,14 @@ export interface FormProps {
 }
 
 const initialData = {
-  name: '',
+  name: "",
   size: 0,
   duration: 0,
   spin: false,
   time: {
-    h: '00',
-    m: '00',
-    s: '00',
+    h: "00",
+    m: "00",
+    s: "00",
   },
 };
 
@@ -39,13 +39,13 @@ const FormAdd: React.FC<FormProps> = (props) => {
     setData({ ...data, name, size, time, duration });
   };
 
-  const handleTimeUpdate = (type: 'h' | 'm' | 's', value: number) => {
+  const handleTimeUpdate = (type: "h" | "m" | "s", value: number) => {
     const time = { ...data.time, [type]: value };
     const duration = hmsToSeconds(time.h, time.m, time.s);
     setData({ ...data, time, duration });
   };
 
-  const getFilename = () => name.toLowerCase().trim() ?? '';
+  const getFilename = () => name.toLowerCase().trim() ?? "";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,7 +56,7 @@ const FormAdd: React.FC<FormProps> = (props) => {
     if (index !== -1) {
       return swale(
         `${filename.toUpperCase()} has already been added.`,
-        'Duplicate message'
+        "Duplicate message"
       );
     }
 
@@ -65,17 +65,17 @@ const FormAdd: React.FC<FormProps> = (props) => {
     const message: MessageI = {
       uid: Date.now(),
       name: filename,
-      status: 'undone',
+      status: "undone",
       workers: [],
-      category: 'sermon',
+      category: "sermon",
       duration: duration,
-      transcriber: createT_TE('T'),
-      transcriptEditor: createT_TE('TE'),
+      transcriber: createT_TE("T"),
+      transcriptEditor: createT_TE("TE"),
       size,
       splits: 1,
-      transcribed: 'no',
-      edited: 'no',
-      sent2CGT: '',
+      transcribed: "no",
+      edited: "no",
+      sent2CGT: "",
       splitLength: 0,
       originalLength: `${h}:${m}:${s}`,
       rank: 1,
@@ -86,7 +86,7 @@ const FormAdd: React.FC<FormProps> = (props) => {
     dispatch(setMessages(list));
     setData(initialData);
     db.setMessage(message);
-    swals('', 'New message added.');
+    swals("", "New message added.");
   };
 
   const containerProps = {
@@ -97,7 +97,7 @@ const FormAdd: React.FC<FormProps> = (props) => {
 
   return (
     <FormContainer props={containerProps}>
-      <form onSubmit={handleSubmit} className='form'>
+      <form onSubmit={handleSubmit} className="form">
         <NameInput
           value={name}
           setName={(name) => setData({ ...data, name })}
@@ -110,7 +110,7 @@ const FormAdd: React.FC<FormProps> = (props) => {
           value={size}
           onChange={(value) => setData({ ...data, size: +value })}
         />
-        <ActionButtonHolder value='add'>
+        <ActionButtonHolder value="add">
           <FileInput callback={handleGetDetails} />
         </ActionButtonHolder>
       </form>

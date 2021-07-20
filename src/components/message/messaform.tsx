@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { MemberI, MessageI, Worker } from '../../types';
-import * as mm from './messageModel';
-import { context } from '../../context/context';
-import { setMM } from '../../context/actions';
-import { db } from '../../services';
-import { ActionButtonHolder } from '../assignment/inputs';
-import { Select, LabelTextField } from '../assignment/inputs';
-import FormHolder from '../../commons/formHolder';
-import { capitalize, setWorkdone, swalconfirm } from '../../utils';
+import React, { useContext, useEffect, useState } from "react";
+import { MemberI, MessageI, Worker } from "../../types";
+import * as mm from "./messageModel";
+import { context } from "../../context/context";
+import { setMM } from "../../context/actions";
+import { db } from "../../services";
+import { ActionButtonHolder } from "../assignment/inputs";
+import { Select, LabelTextField } from "../assignment/inputs";
+import FormHolder from "../commons/formHolder";
+import { capitalize, setWorkdone, swalconfirm } from "../../utils";
 
 export interface AddProps {
   filename: string;
@@ -24,14 +24,14 @@ export const AddForm: React.FC<AddProps> = (props: AddProps) => {
   const [workerUID, setWorkerUID] = useState(0);
 
   const [splitLength, setSplitLength] = useState(0);
-  const [split, setSplit] = useState('');
+  const [split, setSplit] = useState("");
 
   const sorted = activemembers
     .sort((a, b) => `${a.free}`.length - `${b.free}`.length)
     .sort((a, b) => a.type.length - b.type.length)
     .map((m) => [
-      m.uid + '',
-      `${m.name} - ${m.type} ${m.free ? '[Free]' : ''}`,
+      m.uid + "",
+      `${m.name} - ${m.type} ${m.free ? "[Free]" : ""}`,
     ]);
 
   useEffect(() => {
@@ -52,13 +52,13 @@ export const AddForm: React.FC<AddProps> = (props: AddProps) => {
 
     if (!member.free) {
       const res = await swalconfirm(
-        'Yes, Continue',
+        "Yes, Continue",
         `${capitalize(member.name)} is not free at the moment.`
       );
       if (!res.isConfirmed) return;
     }
 
-    const newMessage: MessageI = { ...message, status: 'in-progress' };
+    const newMessage: MessageI = { ...message, status: "in-progress" };
     const newMember: MemberI = { ...member, free: false };
     const { uid: muid, name, type, capacity } = newMember;
 
@@ -73,7 +73,7 @@ export const AddForm: React.FC<AddProps> = (props: AddProps) => {
       splitLength, // must be in seconds.
       done: false,
       dateReceived: new Date().toJSON(),
-      dateReturned: '',
+      dateReturned: "",
       capacity,
       workdone: 0,
     };
@@ -122,22 +122,22 @@ export const AddForm: React.FC<AddProps> = (props: AddProps) => {
         <LabelTextField
           value={split}
           label={filename}
-          placeholder={'s1'}
+          placeholder={"s1"}
           onChange={(value) => handleChange(value)}
         />
         <LabelTextField
-          type='number'
-          value={splitLength / 60 + ''}
-          label='Split Length (Min)'
+          type="number"
+          value={splitLength / 60 + ""}
+          label="Split Length (Min)"
           onChange={(value) => setSplitLength(+value * 60)}
         />
         <Select
-          label='Worker'
-          value={workerUID + ''}
+          label="Worker"
+          value={workerUID + ""}
           values={sorted}
           onChange={(value) => setWorkerUID(+value)}
         />
-        <ActionButtonHolder value='assign' />
+        <ActionButtonHolder value="assign" />
       </form>
     </FormHolder>
   );

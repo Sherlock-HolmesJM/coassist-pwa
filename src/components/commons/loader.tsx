@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { puff } from '../media';
+import styled from "styled-components";
+import { puff } from "../../media";
 
 export interface LoaderProps {
   spin: boolean;
@@ -12,7 +12,7 @@ const Loader: React.FC<LoaderProps> = (props) => {
 
   return (
     <Div>
-      <img src={puff} alt='loader' />
+      <img src={puff} alt="loader" />
     </Div>
   );
 };

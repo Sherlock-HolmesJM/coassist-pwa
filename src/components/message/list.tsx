@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import { capitalize, formatCap, formatDate } from '../../utils';
-import { Worker } from '../../types';
-import { ClickBadge } from '../../commons/badge';
+import styled from "styled-components";
+import { capitalize, formatCap, formatDate } from "../../utils";
+import { Worker } from "../../types";
+import { ClickBadge } from "../commons/badge";
 
 export interface ListProps {
   workers: Worker[];
@@ -18,43 +18,43 @@ const List: React.FC<ListProps> = (props) => {
 
   if (workers.length === 0) return null;
 
-  const tes = workers.filter((w) => w.type === 'TE').length;
-  const ts = workers.filter((w) => w.type === 'T').length;
+  const tes = workers.filter((w) => w.type === "TE").length;
+  const ts = workers.filter((w) => w.type === "T").length;
 
   const isEdited = (worker: Worker) => {
     const { type, done } = worker;
-    if (type === 'TE' || (type === 'T' && !done)) return '';
+    if (type === "TE" || (type === "T" && !done)) return "";
 
-    const TE = workers.find((w) => worker.part === w.part && w.type === 'TE');
+    const TE = workers.find((w) => worker.part === w.part && w.type === "TE");
 
-    if (!TE?.done) return ' [Not Edited]';
-    return '';
+    if (!TE?.done) return " [Not Edited]";
+    return "";
   };
 
   return (
-    <Div className='list'>
-      <div className='title-container'>
-        <h3 className='title'>{capitalize(title)} </h3>
-        <div className='badge badge-secondary bg-summary'>
+    <Div className="list">
+      <div className="title-container">
+        <h3 className="title">{capitalize(title)} </h3>
+        <div className="badge badge-secondary bg-summary">
           T:TE - {ts}:{tes}
         </div>
       </div>
-      <ul className='list-group'>
+      <ul className="list-group">
         {workers
           .sort((a, b) => a.part.localeCompare(b.part))
           .sort((a, b) => a.type.length - b.type.length)
           .map((worker) => {
             return (
-              <div className='list-group-item' key={worker.uid}>
+              <div className="list-group-item" key={worker.uid}>
                 <div>
-                  <div className='list-group-item-name'>
+                  <div className="list-group-item-name">
                     {capitalize(worker.name)} - {worker.type}
-                    <span style={{ color: 'red' }}>{isEdited(worker)}</span>:
+                    <span style={{ color: "red" }}>{isEdited(worker)}</span>:
                   </div>
                   <div>
                     <em>{worker.part.toUpperCase()}</em>
                   </div>
-                  <div className='list-group-item-additional'>
+                  <div className="list-group-item-additional">
                     <em>Length: {formatCap(worker.splitLength)}</em>
                     <em>
                       Received: {formatDate(new Date(worker.dateReceived))}
@@ -64,21 +64,21 @@ const List: React.FC<ListProps> = (props) => {
                     </em>
                   </div>
                 </div>
-                <div className='list-group-item-badges'>
+                <div className="list-group-item-badges">
                   <ClickBadge
-                    color={worker.done ? 'success' : 'secondary'}
+                    color={worker.done ? "success" : "secondary"}
                     onClick={() => onMark(worker)}
-                    text={worker.done ? 'D' : 'IP'}
+                    text={worker.done ? "D" : "IP"}
                   />
                   <ClickBadge
-                    color='warning'
+                    color="warning"
                     onClick={() => onUpdate(worker)}
-                    text='U'
+                    text="U"
                   />
                   <ClickBadge
-                    color='danger'
+                    color="danger"
                     onClick={() => onDelete(worker)}
-                    text='X'
+                    text="X"
                   />
                 </div>
               </div>

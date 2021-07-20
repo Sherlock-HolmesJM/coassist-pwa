@@ -1,20 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { context } from '../../context/context';
-import { setMessages } from '../../context/actions';
-import { MessageI } from '../../types';
-import { db } from '../../services';
-import * as mm from '../message/messageModel';
-import { hmsToSeconds, secondsToHMS, swalconfirm, swals } from '../../utils';
-import { determineSent, updateWorkers } from './helper';
+import React, { useContext, useEffect, useState } from "react";
+import { context } from "../../context/context";
+import { setMessages } from "../../context/actions";
+import { MessageI } from "../../types";
+import { db } from "../../services";
+import * as mm from "../message/messageModel";
+import { hmsToSeconds, secondsToHMS, swalconfirm, swals } from "../../utils";
+import { determineSent, updateWorkers } from "./helper";
 import {
   SizeInput,
   NameInput,
   FileInput,
   ActionButtonHolder,
   Select,
-} from './inputs';
-import TimeInput from './timeInput';
-import FormContainer from '../../commons/formHolder';
+} from "./inputs";
+import TimeInput from "./timeInput";
+import FormContainer from "../commons/formHolder";
 
 export interface FormProps {
   message: MessageI | undefined;
@@ -27,15 +27,15 @@ const FormUpdate: React.FC<FormProps> = (props) => {
   const { dispatch, messages } = useContext(context);
 
   const [data, setData] = useState({
-    name: '',
+    name: "",
     size: 0,
-    sent: '',
+    sent: "",
     duration: 0,
     spin: false,
     time: {
-      h: '0',
-      m: '0',
-      s: '0',
+      h: "0",
+      m: "0",
+      s: "0",
     },
   });
 
@@ -52,7 +52,7 @@ const FormUpdate: React.FC<FormProps> = (props) => {
       size,
       duration,
       time,
-      sent: sent2CGT ?? 'no',
+      sent: sent2CGT ?? "no",
     });
     // eslint-disable-next-line
   }, [message]);
@@ -64,7 +64,7 @@ const FormUpdate: React.FC<FormProps> = (props) => {
     setData({ ...data, name, size, time, duration });
   };
 
-  const handleTimeUpdate = (type: 'h' | 'm' | 's', value: number) => {
+  const handleTimeUpdate = (type: "h" | "m" | "s", value: number) => {
     const time = { ...data.time, [type]: value };
     const duration = hmsToSeconds(time.h, time.m, time.s);
     setData({ ...data, time, duration });
@@ -73,7 +73,7 @@ const FormUpdate: React.FC<FormProps> = (props) => {
   const handleUpdate = async (e: any, message: MessageI) => {
     e.preventDefault();
 
-    const result = await swalconfirm('Yes, update it!');
+    const result = await swalconfirm("Yes, update it!");
     if (!result.isConfirmed) return;
 
     const found = messages.find((m) => m.name === name);
@@ -102,7 +102,7 @@ const FormUpdate: React.FC<FormProps> = (props) => {
     dispatch(setMessages(list));
     db.updateMessage(newMessage);
     setMessage(undefined);
-    swals('', 'Updated');
+    swals("", "Updated");
   };
 
   const containerProps = {
@@ -113,7 +113,7 @@ const FormUpdate: React.FC<FormProps> = (props) => {
 
   return (
     <FormContainer props={containerProps}>
-      <form onSubmit={(e) => handleUpdate(e, message)} className='form'>
+      <form onSubmit={(e) => handleUpdate(e, message)} className="form">
         <NameInput
           value={name}
           setName={(name) => setData({ ...data, name })}
@@ -127,15 +127,15 @@ const FormUpdate: React.FC<FormProps> = (props) => {
           onChange={(value) => setData({ ...data, size: +value })}
         />
         <Select
-          label='Sent to CGT'
+          label="Sent to CGT"
           value={sent}
           values={[
-            ['no', 'no'],
-            ['yes', 'yes'],
+            ["no", "no"],
+            ["yes", "yes"],
           ]}
           onChange={(value) => setData({ ...data, sent: value })}
         />
-        <ActionButtonHolder value='udpate'>
+        <ActionButtonHolder value="udpate">
           <FileInput callback={handleGetDetails} />
         </ActionButtonHolder>
       </form>
