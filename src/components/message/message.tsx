@@ -9,7 +9,7 @@ import { db } from "../../services";
 import * as mm from "./messageModel";
 import { UpdateForm } from "./messuform";
 import { AddForm } from "./messaform";
-import TimeStamps from "../commons/timestamps";
+import TimeStamps from "../common/timestamps";
 import { capitalize, setWorkdone, swalconfirm } from "../../utils";
 
 function Message() {
@@ -123,7 +123,7 @@ function Message() {
       </div>
       <div className="container">
         <List
-          workers={workers.filter((w) => !w.done)}
+          workers={workers}
           done={false}
           title="in-progress"
           onDelete={handleDelete}
@@ -131,7 +131,7 @@ function Message() {
           onMark={handleMark}
         />
         <List
-          workers={workers.filter((w) => w.done)}
+          workers={workers}
           done
           title="done"
           onDelete={handleDelete}

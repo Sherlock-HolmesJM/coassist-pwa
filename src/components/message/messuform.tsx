@@ -5,7 +5,7 @@ import { context } from "../../context/context";
 import { setMessages } from "../../context/actions";
 import { db } from "../../services";
 import { swalconfirm } from "../../utils";
-import FormHolder from "../commons/formHolder";
+import FormHolder from "../common/formHolder";
 import { LabelTextField, ActionButtonHolder } from "../assignment/inputs";
 
 interface UpdateProps {

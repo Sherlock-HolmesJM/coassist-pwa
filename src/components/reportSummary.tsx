@@ -1,8 +1,8 @@
-import SumCard from "../cards/summaryCard";
-import { MemberI, Worker } from "../../types";
-import { isThisWeek, getTeamCapacity } from "../../utils";
-import { getWorkersCapacity } from "../../utils/worker";
-import { Flex, Title } from "./flex";
+import SumCard from "./cards/messageSummaryCard";
+import { MemberI, Worker } from "../types";
+import { isThisWeek, getTeamCapacity } from "../utils";
+import { getWorkersCapacity } from "../utils/worker";
+import { Flex, Title } from "./report/flex";
 
 export interface SummaryProps {
   members: MemberI[];

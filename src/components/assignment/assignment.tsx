@@ -6,10 +6,10 @@ import { setMessages, setMM } from "../../context/actions";
 import { MessageI, MessageStatus } from "../../types";
 import { db } from "../../services";
 import { getMemberStatus } from "../message/messageModel";
-import { ClickBadge } from "../commons/badge";
+import { ClickBadge } from "../common/badge";
 import FormAdd from "./assaform";
 import FormUpdate from "./assuform";
-import Loader from "../commons/loader";
+import Loader from "../common/loader";
 import { swalconfirm } from "../../utils";
 
 function Assignment() {

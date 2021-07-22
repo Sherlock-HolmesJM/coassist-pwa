@@ -7,7 +7,7 @@ import { signOut } from "../services/auth";
 import { context, State } from "../context/context";
 import { setCG, setState, toggleSpin } from "../context/actions";
 import Summary from "./summary";
-import Loader from "./commons/loader";
+import Loader from "./common/loader";
 import { db } from "../services/database";
 import { getExcel } from "../utils/excel";
 import Report from "./report/report";

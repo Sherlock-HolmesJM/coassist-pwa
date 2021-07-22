@@ -3,7 +3,7 @@ import { FlexItem, Flex } from "../report/flex";
 import { Link } from "react-router-dom";
 import { getImage } from "../../utils/report";
 import { getAnim } from "../../utils/getAnim";
-import LottieWrap from "../commons/lottieWrap";
+import LottieWrap from "../common/lottieWrap";
 import { formatCap, isThisWeek } from "../../utils";
 import { congrats, outstanding } from "../../media";
 import { Worker } from "../../types";

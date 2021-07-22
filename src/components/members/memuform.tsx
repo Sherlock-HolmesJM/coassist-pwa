@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { MemberI } from "../../types";
 import { ActionButtonHolder, NameInput, Select } from "../assignment/inputs";
-import FormContainer from "../commons/formHolder";
+import FormContainer from "../common/formHolder";
 import TimeInput from "../assignment/timeInput";
 import { hmsToSeconds, secondsToHMS, swalconfirm } from "../../utils";
 

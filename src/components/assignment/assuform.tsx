@@ -14,7 +14,7 @@ import {
   Select,
 } from "./inputs";
 import TimeInput from "./timeInput";
-import FormContainer from "../commons/formHolder";
+import FormContainer from "../common/formHolder";
 
 export interface FormProps {
   message: MessageI | undefined;

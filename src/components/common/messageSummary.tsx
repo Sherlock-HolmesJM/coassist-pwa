@@ -1,7 +1,7 @@
 import { Flex, Title } from "../report/flex";
 import { MessageI } from "../../types";
 import { formatCap, getMessageTotals } from "../../utils";
-import SumCard from "../cards/summaryCard";
+import SumCard from "../cards/messageSummaryCard";
 import styled from "styled-components";
 import { getAnim } from "../../utils/animations";
 import { getImage } from "../../utils/report";
@@ -48,6 +48,7 @@ const MessageSummary: React.FC<MessageSummaryProps> = (props) => {
             return (
               <SumCard
                 key={i}
+                id={m.uid}
                 title={m.name}
                 animation={getAnim()}
                 items={list}

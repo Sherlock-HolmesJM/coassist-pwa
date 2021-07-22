@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
-import List from "../commons/list";
+import List from "../common/list";
 import { Link } from "react-router-dom";
 import { capitalize, swalconfirm, swale } from "../../utils";
 import { context } from "../../context/context";
@@ -10,7 +10,7 @@ import { db } from "../../services";
 import { getMemberStatus } from "../message/messageModel";
 import Addform from "./memaform";
 import UpdateForm from "./memuform";
-import Loader from "../commons/loader";
+import Loader from "../common/loader";
 
 export interface MembersProps {}
 

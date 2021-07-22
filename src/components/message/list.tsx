@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { capitalize, formatCap, formatDate } from "../../utils";
 import { Worker } from "../../types";
-import { ClickBadge } from "../commons/badge";
+import { ClickBadge } from "../common/badge";
 
 export interface ListProps {
   workers: Worker[];
@@ -14,21 +14,29 @@ export interface ListProps {
 }
 
 const List: React.FC<ListProps> = (props) => {
-  const { title, workers, onMark, onDelete, onUpdate } = props;
+  const { title, workers, onMark, onDelete, onUpdate, done } = props;
 
   if (workers.length === 0) return null;
 
-  const tes = workers.filter((w) => w.type === "TE").length;
-  const ts = workers.filter((w) => w.type === "T").length;
+  const TEs = workers.filter((w) => w.type === "TE");
+  const Ts = workers.filter((w) => w.type === "T");
+
+  const createObj = (color: string, text: string) => {
+    return { color, text };
+  };
 
   const isEdited = (worker: Worker) => {
     const { type, done } = worker;
-    if (type === "TE" || (type === "T" && !done)) return "";
 
-    const TE = workers.find((w) => worker.part === w.part && w.type === "TE");
+    // Label only transcribers who are done with their work.
+    if (type === "T" && done) {
+      const TE = TEs.find((te) => te.part === worker.part);
 
-    if (!TE?.done) return " [Not Edited]";
-    return "";
+      if (!TE) return createObj("red", " [Not Edited]");
+      if (TE && !TE.done) return createObj("blue", " [Editing]");
+    }
+
+    return createObj("", "");
   };
 
   return (
@@ -36,20 +44,23 @@ const List: React.FC<ListProps> = (props) => {
       <div className="title-container">
         <h3 className="title">{capitalize(title)} </h3>
         <div className="badge badge-secondary bg-summary">
-          T:TE - {ts}:{tes}
+          T:TE - {Ts.length}:{TEs.length}
         </div>
       </div>
       <ul className="list-group">
         {workers
+          .filter((w) => w.done === done)
           .sort((a, b) => a.part.localeCompare(b.part))
           .sort((a, b) => a.type.length - b.type.length)
           .map((worker) => {
+            const { color, text } = isEdited(worker);
+
             return (
               <div className="list-group-item" key={worker.uid}>
                 <div>
                   <div className="list-group-item-name">
                     {capitalize(worker.name)} - {worker.type}
-                    <span style={{ color: "red" }}>{isEdited(worker)}</span>:
+                    <span style={{ color }}>{text}</span>:
                   </div>
                   <div>
                     <em>{worker.part.toUpperCase()}</em>

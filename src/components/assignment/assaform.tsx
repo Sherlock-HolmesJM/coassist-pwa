@@ -6,7 +6,7 @@ import { MessageI, createT_TE } from "../../types";
 import { db } from "../../services";
 import { SizeInput, NameInput, FileInput, ActionButtonHolder } from "./inputs";
 import TimeInput from "./timeInput";
-import FormContainer from "../commons/formHolder";
+import FormContainer from "../common/formHolder";
 
 export interface FormProps {
   setShowform: (value: boolean) => void;

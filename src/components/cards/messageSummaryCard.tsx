@@ -1,18 +1,38 @@
 import styled from "styled-components";
+import { getAnim } from "../../utils/getAnim";
 import { FlexItem } from "../report/flex";
+import { useHistory } from "react-router-dom";
 
 interface SumCardProps {
   title: string;
   items: [string, string][];
   animation?: string;
+  id?: string | number;
 }
 
 const SumCard: React.FC<SumCardProps> = (props) => {
-  const { title, items, animation } = props;
+  const { title, items, animation, id } = props;
+  const renderButten = items.length > 2;
+
+  const history = useHistory();
+
+  const handleOpen = (id: any) => {
+    history.push(`/assignments/${id}`);
+  };
 
   return (
-    <FlexItemWrap data-aos={animation ?? "flip-down"}>
-      <h6 className="card-title">{title.toUpperCase()}</h6>
+    <FlexItemWrap data-aos={getAnim(animation ?? "flip-down")}>
+      <div className="card-title-div">
+        <h6 className="card-title">{title.toUpperCase()}</h6>
+        {renderButten && (
+          <button
+            className="btn btn-primary btn-sm card-open"
+            onClick={() => handleOpen(id)}
+          >
+            Open
+          </button>
+        )}
+      </div>
       {items.map((item, index) => (
         <div className="card-totals-container" key={index}>
           <em className="card-total">{item[0]}</em>
@@ -28,6 +48,16 @@ const FlexItemWrap = styled(FlexItem)`
   background-color: #264653;
   color: #fff;
   border-bottom: 3px solid black;
+
+  .card-title-div {
+    position: relative;
+  }
+
+  .card-open {
+    position: absolute;
+    top: -5px;
+    right: 3px;
+  }
 
   .card-title {
     text-transform: uppercase;

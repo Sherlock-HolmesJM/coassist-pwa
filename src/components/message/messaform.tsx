@@ -6,7 +6,7 @@ import { setMM } from "../../context/actions";
 import { db } from "../../services";
 import { ActionButtonHolder } from "../assignment/inputs";
 import { Select, LabelTextField } from "../assignment/inputs";
-import FormHolder from "../commons/formHolder";
+import FormHolder from "../common/formHolder";
 import { capitalize, setWorkdone, swalconfirm } from "../../utils";
 
 export interface AddProps {

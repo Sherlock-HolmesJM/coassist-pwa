@@ -1,11 +1,11 @@
 import { useContext, useRef } from "react";
 import { context } from "../../context/context";
 import styled from "styled-components";
-import Summary from "./summary";
+import Summary from "../reportSummary";
 import NotAllocated from "./notAllocated";
 import IssuedAndReturned from "./issuedAndReturned";
 import { isThisWeek, getWeekBegin, getWeekEnd } from "../../utils/date";
-import MessageSummary from "../commons/messageSummary";
+import MessageSummary from "../common/messageSummary";
 import * as reportUtils from "../../utils/report";
 
 export interface ReportProps {
@@ -66,10 +66,11 @@ const Report: React.FC<ReportProps> = (props) => {
   );
 
   const messagesfinishedthisweek = messages.filter((message) => {
-    const { dateReturned } = message.transcriptEditor;
+    const { status, transcriptEditor } = message;
+    const { dateReturned } = transcriptEditor;
 
     return (
-      (message.status === "done" || message.status === "sent2CGT") &&
+      (status === "done" || status === "sent2CGT") &&
       isThisWeek(new Date(dateReturned))
     );
   });
