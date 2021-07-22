@@ -18,8 +18,10 @@ const List: React.FC<ListProps> = (props) => {
 
   if (workers.length === 0) return null;
 
-  const TEs = workers.filter((w) => w.type === "TE");
-  const Ts = workers.filter((w) => w.type === "T");
+  const lenTEs = workers.filter(
+    (w) => w.type === "TE" && w.done === done
+  ).length;
+  const lenTs = workers.filter((w) => w.type === "T" && w.done === done).length;
 
   const createObj = (color: string, text: string) => {
     return { color, text };
@@ -30,7 +32,7 @@ const List: React.FC<ListProps> = (props) => {
 
     // Label only transcribers who are done with their work.
     if (type === "T" && done) {
-      const TE = TEs.find((te) => te.part === worker.part);
+      const TE = workers.find((w) => w.type === "TE" && w.part === worker.part);
 
       if (!TE) return createObj("red", " [Not Edited]");
       if (TE && !TE.done) return createObj("blue", " [Editing]");
@@ -44,7 +46,7 @@ const List: React.FC<ListProps> = (props) => {
       <div className="title-container">
         <h3 className="title">{capitalize(title)} </h3>
         <div className="badge badge-secondary bg-summary">
-          T:TE - {Ts.length}:{TEs.length}
+          T:TE - {lenTs}:{lenTEs}
         </div>
       </div>
       <ul className="list-group">
